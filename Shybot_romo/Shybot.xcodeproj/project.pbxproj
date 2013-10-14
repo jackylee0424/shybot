@@ -21,13 +21,13 @@
 		6A11C9B5180B8E1400A30C7B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C997180B8E1400A30C7B /* UIKit.framework */; };
 		6A11C9BD180B8E1400A30C7B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6A11C9BB180B8E1400A30C7B /* InfoPlist.strings */; };
 		6A11C9BF180B8E1400A30C7B /* ShybotTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A11C9BE180B8E1400A30C7B /* ShybotTests.m */; };
-		6A11C9CC180B8E6C00A30C7B /* RMCharacter.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6A11C9C9180B8E6C00A30C7B /* RMCharacter.bundle */; };
-		6A11C9CD180B8E6C00A30C7B /* RMCharacter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C9CA180B8E6C00A30C7B /* RMCharacter.framework */; };
-		6A11C9CE180B8E6C00A30C7B /* RMCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C9CB180B8E6C00A30C7B /* RMCore.framework */; };
 		6A11C9D0180B8EAD00A30C7B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C9CF180B8EAD00A30C7B /* CoreMotion.framework */; };
 		6A11C9D2180B8EB300A30C7B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C9D1180B8EB300A30C7B /* AVFoundation.framework */; };
 		6A11C9D4180B8EB900A30C7B /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C9D3180B8EB900A30C7B /* ExternalAccessory.framework */; };
 		6A11C9D6180B8EC000A30C7B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C9D5180B8EC000A30C7B /* QuartzCore.framework */; };
+		6A11C9DB180B95CD00A30C7B /* RMCharacter.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6A11C9D8180B95CD00A30C7B /* RMCharacter.bundle */; };
+		6A11C9DC180B95CD00A30C7B /* RMCharacter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C9D9180B95CD00A30C7B /* RMCharacter.framework */; };
+		6A11C9DD180B95CD00A30C7B /* RMCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C9DA180B95CD00A30C7B /* RMCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,13 +60,13 @@
 		6A11C9BA180B8E1400A30C7B /* ShybotTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ShybotTests-Info.plist"; sourceTree = "<group>"; };
 		6A11C9BC180B8E1400A30C7B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6A11C9BE180B8E1400A30C7B /* ShybotTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShybotTests.m; sourceTree = "<group>"; };
-		6A11C9C9180B8E6C00A30C7B /* RMCharacter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = RMCharacter.bundle; sourceTree = "<group>"; };
-		6A11C9CA180B8E6C00A30C7B /* RMCharacter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RMCharacter.framework; sourceTree = "<group>"; };
-		6A11C9CB180B8E6C00A30C7B /* RMCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RMCore.framework; sourceTree = "<group>"; };
 		6A11C9CF180B8EAD00A30C7B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		6A11C9D1180B8EB300A30C7B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		6A11C9D3180B8EB900A30C7B /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		6A11C9D5180B8EC000A30C7B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		6A11C9D8180B95CD00A30C7B /* RMCharacter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = RMCharacter.bundle; sourceTree = "<group>"; };
+		6A11C9D9180B95CD00A30C7B /* RMCharacter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RMCharacter.framework; sourceTree = "<group>"; };
+		6A11C9DA180B95CD00A30C7B /* RMCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RMCore.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,9 +78,9 @@
 				6A11C9D4180B8EB900A30C7B /* ExternalAccessory.framework in Frameworks */,
 				6A11C9D2180B8EB300A30C7B /* AVFoundation.framework in Frameworks */,
 				6A11C9D0180B8EAD00A30C7B /* CoreMotion.framework in Frameworks */,
+				6A11C9DD180B95CD00A30C7B /* RMCore.framework in Frameworks */,
 				6A11C996180B8E1400A30C7B /* CoreGraphics.framework in Frameworks */,
-				6A11C9CE180B8E6C00A30C7B /* RMCore.framework in Frameworks */,
-				6A11C9CD180B8E6C00A30C7B /* RMCharacter.framework in Frameworks */,
+				6A11C9DC180B95CD00A30C7B /* RMCharacter.framework in Frameworks */,
 				6A11C998180B8E1400A30C7B /* UIKit.framework in Frameworks */,
 				6A11C994180B8E1400A30C7B /* Foundation.framework in Frameworks */,
 			);
@@ -121,11 +121,11 @@
 		6A11C992180B8E1400A30C7B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6A11C9D7180B95CD00A30C7B /* Romo */,
 				6A11C9D5180B8EC000A30C7B /* QuartzCore.framework */,
 				6A11C9D3180B8EB900A30C7B /* ExternalAccessory.framework */,
 				6A11C9D1180B8EB300A30C7B /* AVFoundation.framework */,
 				6A11C9CF180B8EAD00A30C7B /* CoreMotion.framework */,
-				6A11C9C8180B8E6C00A30C7B /* Romo */,
 				6A11C993180B8E1400A30C7B /* Foundation.framework */,
 				6A11C995180B8E1400A30C7B /* CoreGraphics.framework */,
 				6A11C997180B8E1400A30C7B /* UIKit.framework */,
@@ -177,14 +177,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		6A11C9C8180B8E6C00A30C7B /* Romo */ = {
+		6A11C9D7180B95CD00A30C7B /* Romo */ = {
 			isa = PBXGroup;
 			children = (
-				6A11C9C9180B8E6C00A30C7B /* RMCharacter.bundle */,
-				6A11C9CA180B8E6C00A30C7B /* RMCharacter.framework */,
-				6A11C9CB180B8E6C00A30C7B /* RMCore.framework */,
+				6A11C9D8180B95CD00A30C7B /* RMCharacter.bundle */,
+				6A11C9D9180B95CD00A30C7B /* RMCharacter.framework */,
+				6A11C9DA180B95CD00A30C7B /* RMCore.framework */,
 			);
-			path = Romo;
+			name = Romo;
+			path = ../Romo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -266,7 +267,7 @@
 			files = (
 				6A11C9AC180B8E1400A30C7B /* Images.xcassets in Resources */,
 				6A11C99E180B8E1400A30C7B /* InfoPlist.strings in Resources */,
-				6A11C9CC180B8E6C00A30C7B /* RMCharacter.bundle in Resources */,
+				6A11C9DB180B95CD00A30C7B /* RMCharacter.bundle in Resources */,
 				6A11C9A7180B8E1400A30C7B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -418,6 +419,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/jackielee/code/Shybot/Romo,
+					/Users/jackielee/code/shybot/Romo,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shybot/Shybot-Prefix.pch";
@@ -435,6 +437,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/jackielee/code/Shybot/Romo,
+					/Users/jackielee/code/shybot/Romo,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shybot/Shybot-Prefix.pch";
@@ -505,6 +508,7 @@
 				6A11C9C4180B8E1400A30C7B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6A11C9C5180B8E1400A30C7B /* Build configuration list for PBXNativeTarget "ShybotTests" */ = {
 			isa = XCConfigurationList;
@@ -513,6 +517,7 @@
 				6A11C9C7180B8E1400A30C7B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
