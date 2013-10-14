@@ -19,3 +19,8 @@ DerivedData
 
 #CocoaPods
 Pods
+
+
+#development
+tmp
+.pyc
