@@ -14,6 +14,6 @@ Citation
     
 Notes
 ======
-    * To smoothly run it in debug mode, iPhone/iPod needs to be docked (on Romo) 
+    To smoothly run it in debug mode, iPhone/iPod needs to be docked (on Romo) 
     "before" connecting the charging wire to your Mac.
 
