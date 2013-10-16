@@ -11,10 +11,19 @@
 #import <UIKit/UIKit.h>
 #import <RMCore/RMCore.h>
 #import <RMCharacter/RMCharacter.h>
+#import <opencv2/highgui/cap_ios.h>
+#import "FaceDetector.h"
+using namespace cv;
 
-@interface MainViewController : UIViewController<RMCoreDelegate>
-
+@interface MainViewController : UIViewController<RMCoreDelegate, CvVideoCameraDelegate>{
+    //CvVideoCamera * videoCamera;
+    //IBOutlet UIImageView
+}
+@property (nonatomic, strong) IBOutlet UIImageView * cvcameraview;
 @property (nonatomic, strong) RMCoreRobot<DriveProtocol, LEDProtocol> *robot;
 @property (nonatomic, strong) RMCharacter *romo; // for romo character
+@property (nonatomic, strong) CvVideoCamera* videoCamera;
+@property (nonatomic, strong) IBOutlet UIImageView * romo_char;
+@property (nonatomic, strong) FaceDetector *faceDetector;
 
 @end
