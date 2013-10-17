@@ -3,8 +3,12 @@ Shybot
 
 Shybot is an emotion-driven robot like a shy creature. This repository contains 
 its prototype code based on Romo. Shybot was a research project from the Autism 
-Theory and Technology class at the MIT Media Lab. 
+Theory and Technology class (2007) at the Media Lab, MIT. 
 http://affect.media.mit.edu/projects.php?id=2306
+
+My plan is to rebuild it using some existing platform (e.g., Romo or sparkfun 
+robotic car). The key is to implement its emotion-familiarity model using face 
+recognition techniques.
 
 Citation
 ======
