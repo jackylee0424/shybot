@@ -36,6 +36,7 @@
 		6A11C9EC180E8A4000A30C7B /* FaceDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6A11C9EB180E8A4000A30C7B /* FaceDetector.mm */; };
 		6A11C9EE180E8CCA00A30C7B /* haarcascade_frontalface_alt2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 6A11C9ED180E8CCA00A30C7B /* haarcascade_frontalface_alt2.xml */; };
 		6A11C9EF180E8CE200A30C7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A11C9A5180B8E1400A30C7B /* Main.storyboard */; };
+		6A7CB20F180F8EC3007DC1D5 /* OpenCVData.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6A7CB20E180F8EC3007DC1D5 /* OpenCVData.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,8 @@
 		6A11C9EA180E8A4000A30C7B /* FaceDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceDetector.h; sourceTree = "<group>"; };
 		6A11C9EB180E8A4000A30C7B /* FaceDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FaceDetector.mm; sourceTree = "<group>"; };
 		6A11C9ED180E8CCA00A30C7B /* haarcascade_frontalface_alt2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_frontalface_alt2.xml; sourceTree = "<group>"; };
+		6A7CB20D180F8EC3007DC1D5 /* OpenCVData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenCVData.h; sourceTree = "<group>"; };
+		6A7CB20E180F8EC3007DC1D5 /* OpenCVData.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCVData.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,11 +169,13 @@
 		6A11C999180B8E1400A30C7B /* Shybot */ = {
 			isa = PBXGroup;
 			children = (
+				6A11C9A5180B8E1400A30C7B /* Main.storyboard */,
+				6A7CB20D180F8EC3007DC1D5 /* OpenCVData.h */,
+				6A7CB20E180F8EC3007DC1D5 /* OpenCVData.mm */,
 				6A11C9EA180E8A4000A30C7B /* FaceDetector.h */,
 				6A11C9EB180E8A4000A30C7B /* FaceDetector.mm */,
 				6A11C9A2180B8E1400A30C7B /* MainAppDelegate.h */,
 				6A11C9A3180B8E1400A30C7B /* MainAppDelegate.m */,
-				6A11C9A5180B8E1400A30C7B /* Main.storyboard */,
 				6A11C9A8180B8E1400A30C7B /* MainViewController.h */,
 				6A11C9A9180B8E1400A30C7B /* MainViewController.mm */,
 				6A11C9ED180E8CCA00A30C7B /* haarcascade_frontalface_alt2.xml */,
@@ -322,6 +327,7 @@
 			files = (
 				6A11C9EC180E8A4000A30C7B /* FaceDetector.mm in Sources */,
 				6A11C9A0180B8E1400A30C7B /* main.m in Sources */,
+				6A7CB20F180F8EC3007DC1D5 /* OpenCVData.mm in Sources */,
 				6A11C9AA180B8E1400A30C7B /* MainViewController.mm in Sources */,
 				6A11C9A4180B8E1400A30C7B /* MainAppDelegate.m in Sources */,
 			);

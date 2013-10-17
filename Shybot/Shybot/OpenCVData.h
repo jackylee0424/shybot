@@ -1,9 +1,9 @@
 //
-//  FaceDetector.mm
+//  OpenCVData.h
 //  FaceRecognition
 //
 //  Created by Michael Peterson on 2012-11-16.
-//  Modified by Jackie Lee on 2013-10-16
+//
 //
 
 /*
@@ -30,34 +30,16 @@
  SOFTWARE.
  */
 
-#import "FaceDetector.h"
 
-NSString * const kFaceCascadeFilename = @"haarcascade_frontalface_alt2";
-const int kHaarOptions =  CV_HAAR_FIND_BIGGEST_OBJECT | CV_HAAR_DO_ROUGH_SEARCH;
+#import <Foundation/Foundation.h>
+#import <opencv2/highgui/cap_ios.h>
 
-@implementation FaceDetector
+@interface OpenCVData : NSObject
 
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        NSString *faceCascadePath = [[NSBundle mainBundle] pathForResource:kFaceCascadeFilename
-                                                                    ofType:@"xml"];
-        
-        if (!_faceCascade.load([faceCascadePath UTF8String])) {
-            NSLog(@"Could not load face cascade: %@", faceCascadePath);
-        }
-    }
-    
-    return self;
-}
-
-- (std::vector<cv::Rect>)facesFromImage:(cv::Mat&)image
-{
-    std::vector<cv::Rect> faces;
-    _faceCascade.detectMultiScale(image, faces, 1.1, 2, kHaarOptions, cv::Size(50, 50));
-    
-    return faces;
-}
-
++ (NSData *)serializeCvMat:(cv::Mat&)cvMat;
++ (cv::Mat)dataToMat:(NSData *)data width:(NSNumber *)width height:(NSNumber *)height;
++ (CGRect)faceToCGRect:(cv::Rect)face;
++ (UIImage *)UIImageFromMat:(cv::Mat)image;
++ (cv::Mat)cvMatFromUIImage:(UIImage *)image;
++ (cv::Mat)cvMatFromUIImage:(UIImage *)image usingColorSpace:(int)outputSpace;
 @end

@@ -3,7 +3,7 @@
 //  FaceRecognition
 //
 //  Created by Michael Peterson on 2012-11-16.
-//
+//  Modified by Jackie Lee on 2013-10-16
 //
 
 /*
