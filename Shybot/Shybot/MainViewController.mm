@@ -21,29 +21,38 @@
 {
     const std::vector<cv::Rect> faces = [self.faceDetector facesFromImage:image];
     if (faces.size()>0){
+        self.dnumoffaces =1;
         
-        // All changes to the UI have to happen on the main thread
+        // dispatch to main thread
         dispatch_sync(dispatch_get_main_queue(), ^{
             [self highlightFace:[OpenCVData faceToCGRect:faces[0]] withColor:[[UIColor cyanColor] CGColor]];
-            [self.debug_status setText:[NSString stringWithFormat:@"face: %d, %d, %d, %d",faces[0].x,faces[0].y,faces[0].width,faces[0].height]];
+            [self.debug_status setText:[NSString stringWithFormat:@"face:(%d, %d), size: %d",faces[0].x,faces[0].y,faces[0].width]];
+            
+            // speed up shybot's heart rate
             [self.robot.LEDs pulseWithPeriod:.8 direction:RMCoreLEDPulseDirectionUpAndDown];
             
-            if (faces[0].height>55){
-                [self.robot.LEDs pulseWithPeriod:0.3 direction:RMCoreLEDPulseDirectionUpAndDown];
-                [self.debug_status setText:@"too close"];
+            if (faces[0].height>[[personality objectForKey:@"face_size_uneasy"]intValue]){
                 
-                if (faces[0].height>70){
+                // speed up shybot's heart rate more
+                [self.robot.LEDs pulseWithPeriod:0.3 direction:RMCoreLEDPulseDirectionUpAndDown];
+                [self.debug_status setText:@"it's too close!"];
+                
+                if (faces[0].height>[[personality objectForKey:@"face_size_nervous"]intValue]){
+                    // make shybot run backward
                     if (!self.robot.isDriving) {
                         [self.robot driveBackwardWithSpeed:.5];
                         self.debug_status.text = @"way too close!!";
                     }else{
-                        self.debug_status.text = @"bye!";
+                        self.debug_status.text = @"running away~~";
                     }
                 }
                 
             }else{
-                [self.robot stopDriving];
-                
+                // in good distance, be curious
+                if (self.robot.isDriving)
+                    [self.robot stopDriving];
+                //[self.robot driveForwardWithSpeed:.2];
+                self.debug_status.text = @"who r u?";
             }
 
         });
@@ -51,24 +60,18 @@
     else
     {
         
-        [self noFaceToDisplay];
-        
-        
+        self.dnumoffaces =0;
+        // dispatch to main thread
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            self.featureLayer.hidden = YES;
+            // in a distance, recovered, start be curious
+            [self.robot.LEDs pulseWithPeriod:5.0 direction:RMCoreLEDPulseDirectionUpAndDown];
+            //if (self.robot.isDriving)[self.robot stopDriving];
+        });
+         
     }
 }
 #endif
-
-- (void)noFaceToDisplay
-{
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        self.featureLayer.hidden = YES;
-        [self.robot.LEDs pulseWithPeriod:5.0 direction:RMCoreLEDPulseDirectionUpAndDown];
-        
-        [self.robot stopDriving];
-        
-        
-    });
-}
 
 - (void)highlightFace:(CGRect)faceRect withColor:(CGColor *)color
 {
@@ -94,15 +97,13 @@
 
 - (void)robotDidConnect:(RMCoreRobot *)robot
 {
-    // Currently the only kind of robot is Romo3, which supports all of these
-    //  protocols, so this is just future-proofing
+
+    // init Romo
     if (robot.isDrivable && robot.isHeadTiltable && robot.isLEDEquipped) {
         self.robot = (RMCoreRobot<DriveProtocol, LEDProtocol> *) robot;
-        
-        // When we plug Romo in, he get's excited!
-        //self.romo.expression = RMCharacterExpressionExcited;
-        NSLog(@"connected!");
-        [self.robot.LEDs pulseWithPeriod:1.0 direction:RMCoreLEDPulseDirectionUpAndDown];
+    
+        NSLog(@"Romo dock connected!");
+        [self.robot.LEDs pulseWithPeriod:5.0 direction:RMCoreLEDPulseDirectionUpAndDown];
     }
 }
 
@@ -110,15 +111,32 @@
 {
     if (robot == self.robot) {
         self.robot = nil;
-        NSLog(@"disconnected");
+        NSLog(@"Romo dock disconnected");
         [self.robot.LEDs turnOff];
     }
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    // Add Romo's face to self.view whenever the view will appear
-    //[self.romo addToSuperview:self.romo_char];
+
+}
+
+- (void)check_environment{
+    
+    // if nothing happening (aka no faces), be curious, move forward
+    if (self.dnumoffaces<1){
+        if (!self.robot.isDriving)
+            [self.robot driveForwardWithSpeed:.2];
+        else
+            [self.robot stopDriving];
+            
+        self.debug_status.text = @"what's happening?";
+    }
+    /*
+    else{
+        [self.robot stopDriving];
+    }*/
+    
 }
 
 - (void)viewDidLoad
@@ -126,6 +144,10 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
+    // personality setup (need to move to a new class)
+    personality = [[NSMutableDictionary alloc] init];
+    [personality setObject:[NSNumber numberWithInt:55] forKey:@"face_size_uneasy"];
+    [personality setObject:[NSNumber numberWithInt:70] forKey:@"face_size_nervous"];
     
     self.faceDetector = [[FaceDetector alloc] init];
     
@@ -137,16 +159,10 @@
     self.videoCamera.defaultFPS = 30;
     self.videoCamera.grayscaleMode = YES;
     
-    
     [RMCore setDelegate:self];
-    
-    // Grab a shared instance of the Romo character
-    //self.romo = [RMCharacter Romo];
-    
-    
 
-    
-    
+    self.dnumoffaces = 0;
+    [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(check_environment) userInfo:nil repeats:YES];
     
 }
 
