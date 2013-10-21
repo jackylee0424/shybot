@@ -9,8 +9,9 @@ Theory and Technology class (2007) at the Media Lab, MIT. [Short video from '07 
 
 Current Development
 ======
-The plan is to re-build it using some existing platform (e.g., [Romo](http://romotive.com/ "iPhone/iPod extension toy car") or sparkfun 
-robotic car). The key is to implement its emotion-familiarity model using face recognition techniques on iPod touch 4th(!). 
+The plan is to re-build it using some existing platform (e.g., [Romo](http://romotive.com/ "iPhone/iPod extension toy car")
+or [SparkFun robotic car](https://www.sparkfun.com/products/10825)). 
+The key is to implement its emotion-familiarity model using face recognition techniques on iPod touch 4th(!). 
 This repository contains Shybot's work-in-progress prototype code based on Romo. Proximity sensors and industrial design will be added soon.
 
 <img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_13a.png" height=240 />
