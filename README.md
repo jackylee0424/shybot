@@ -14,8 +14,8 @@ or [SparkFun robotic car](https://www.sparkfun.com/products/10825)).
 The key is to implement its emotion-familiarity model using face recognition techniques on iPod touch 4th(!). 
 This repository contains Shybot's work-in-progress prototype code based on Romo. Proximity sensors and industrial design will be added soon.
 
-<img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_13a.png" height=240 />
-<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Kou-Kou_by_Georgios_Iakovidis.jpg/200px-Kou-Kou_by_Georgios_Iakovidis.jpg" height=240 />
+<img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_13a.png" height=200 />
+<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Kou-Kou_by_Georgios_Iakovidis.jpg/200px-Kou-Kou_by_Georgios_Iakovidis.jpg" height=200 />
 
 Citation
 ======
