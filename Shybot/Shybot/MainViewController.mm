@@ -13,6 +13,7 @@
 @end
 
 @implementation MainViewController
+@synthesize debug_status;
 
 #pragma mark - Protocol CvVideoCameraDelegate
 #ifdef __cplusplus
@@ -20,15 +21,39 @@
 {
     const std::vector<cv::Rect> faces = [self.faceDetector facesFromImage:image];
     if (faces.size()>0){
-        NSLog(@"face: %d, %d, %d, %d",faces[0].x,faces[0].y,faces[0].width,faces[0].height);
+        
         // All changes to the UI have to happen on the main thread
         dispatch_sync(dispatch_get_main_queue(), ^{
             [self highlightFace:[OpenCVData faceToCGRect:faces[0]] withColor:[[UIColor cyanColor] CGColor]];
+            [self.debug_status setText:[NSString stringWithFormat:@"face: %d, %d, %d, %d",faces[0].x,faces[0].y,faces[0].width,faces[0].height]];
+            [self.robot.LEDs pulseWithPeriod:.8 direction:RMCoreLEDPulseDirectionUpAndDown];
+            
+            if (faces[0].height>55){
+                [self.robot.LEDs pulseWithPeriod:0.3 direction:RMCoreLEDPulseDirectionUpAndDown];
+                [self.debug_status setText:@"too close"];
+                
+                if (faces[0].height>70){
+                    if (!self.robot.isDriving) {
+                        [self.robot driveBackwardWithSpeed:.5];
+                        self.debug_status.text = @"way too close!!";
+                    }else{
+                        self.debug_status.text = @"bye!";
+                    }
+                }
+                
+            }else{
+                [self.robot stopDriving];
+                
+            }
+
         });
     }
     else
     {
+        
         [self noFaceToDisplay];
+        
+        
     }
 }
 #endif
@@ -37,6 +62,11 @@
 {
     dispatch_sync(dispatch_get_main_queue(), ^{
         self.featureLayer.hidden = YES;
+        [self.robot.LEDs pulseWithPeriod:5.0 direction:RMCoreLEDPulseDirectionUpAndDown];
+        
+        [self.robot stopDriving];
+        
+        
     });
 }
 
@@ -72,6 +102,7 @@
         // When we plug Romo in, he get's excited!
         //self.romo.expression = RMCharacterExpressionExcited;
         NSLog(@"connected!");
+        [self.robot.LEDs pulseWithPeriod:1.0 direction:RMCoreLEDPulseDirectionUpAndDown];
     }
 }
 
@@ -79,6 +110,8 @@
 {
     if (robot == self.robot) {
         self.robot = nil;
+        NSLog(@"disconnected");
+        [self.robot.LEDs turnOff];
     }
 }
 
@@ -92,6 +125,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
     
     self.faceDetector = [[FaceDetector alloc] init];
     

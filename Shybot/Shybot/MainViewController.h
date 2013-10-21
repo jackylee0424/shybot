@@ -20,6 +20,7 @@ using namespace cv;
 @interface MainViewController : UIViewController<RMCoreDelegate, CvVideoCameraDelegate>{
     //CvVideoCamera * videoCamera;
     //IBOutlet UIImageView
+    
 }
 @property (nonatomic, strong) IBOutlet UIImageView * cvcameraview;
 @property (nonatomic, strong) RMCoreRobot<DriveProtocol, LEDProtocol> *robot;
@@ -28,5 +29,5 @@ using namespace cv;
 //@property (nonatomic, strong) IBOutlet UIImageView * romo_char;
 @property (nonatomic, strong) FaceDetector *faceDetector;
 @property (nonatomic, strong) CALayer *featureLayer;
-
+@property (nonatomic, retain) IBOutlet UILabel * debug_status;
 @end
