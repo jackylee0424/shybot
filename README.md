@@ -2,7 +2,7 @@ Shybot
 ======
 
 Shybot is an emotion-driven robot like a shy creature. Shybot was a [research project](http://affect.media.mit.edu/projects.php?id=2306 "Affective Computing Group") from the Autism 
-Theory and Technology class (2007) at the Media Lab, MIT. [Short video (.m4v)]()
+Theory and Technology class (2007) at the Media Lab, MIT. [Short video (.m4v)](https://github.com/jackylee0424/shybot/blob/master/doc/shybot_07short.m4v?raw=true)
 
 <img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_07a.jpg" height=240 />
 <img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_07b.jpg" height=240 />
