@@ -21,5 +21,7 @@ Notes
 ======
     To smoothly run it in debug mode, iPhone/iPod needs 
     to be docked (on Romo) "before" connecting the 
-    charging wire to your Mac.
+    charging wire to your Mac. "After" connected, Romo
+    will try connecting its app, so click "ignore" then
+    open Shybot app.
 
