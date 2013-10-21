@@ -7,6 +7,7 @@ Theory and Technology class (2007) at the Media Lab, MIT. [Short video from '07 
 <img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_07a.jpg" height=240 />
 <img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_07b.jpg" height=240 />
 
+
 Current Development
 ======
 The plan is to re-build it using some existing platform (e.g., [Romo](http://romotive.com/ "iPhone/iPod extension toy car")
@@ -17,11 +18,13 @@ This repository contains Shybot's work-in-progress prototype code based on Romo.
 <img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_13a.png" height=200 />
 <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Kou-Kou_by_Georgios_Iakovidis.jpg/200px-Kou-Kou_by_Georgios_Iakovidis.jpg" height=200 />
 
+
 Citation
 ======
 Lee, C.H., Kim, K., Breazeal, C., Picard, R.W. Shybot: Friend-Stranger Interaction for Children Living with Autism, Work-In-Progress in the Extended Abstract of Computer-Human Interaction 2008, April 5-10, 2008, Florence, Italy
 
 [Download full-text PDF](https://github.com/jackylee0424/shybot/blob/master/reference/chi08_shybot-lee.pdf?raw=true)
+
 
 Notes
 ======
