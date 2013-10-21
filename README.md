@@ -13,6 +13,8 @@ The plan is to re-build it using some existing platform (e.g., [Romo](http://rom
 robotic car). The key is to implement its emotion-familiarity model using face 
 recognition techniques. This repository contains Shybot's work-in-progress prototype code based on Romo. 
 
+<img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_13a.png" height=240 />
+
 Citation
 ======
 Lee, C.H., Kim, K., Breazeal, C., Picard, R.W. Shybot: Friend-Stranger Interaction for Children Living with Autism, Work-In-Progress in the Extended Abstract of Computer-Human Interaction 2008, April 5-10, 2008, Florence, Italy
