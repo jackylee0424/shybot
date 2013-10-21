@@ -12,6 +12,7 @@ recognition techniques.
 Citation
 ======
 Lee, C.H., Kim, K., Breazeal, C., Picard, R.W. Shybot: Friend-Stranger Interaction for Children Living with Autism, Work-In-Progress in the Extended Abstract of Computer-Human Interaction 2008, April 5-10, 2008, Florence, Italy
+
 [Download PDF](https://github.com/jackylee0424/shybot/blob/master/reference/chi08_shybot-lee.pdf?raw=true)
 
 Notes
