@@ -15,19 +15,10 @@
 		6A11C9A4180B8E1400A30C7B /* MainAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A11C9A3180B8E1400A30C7B /* MainAppDelegate.m */; };
 		6A11C9AA180B8E1400A30C7B /* MainViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6A11C9A9180B8E1400A30C7B /* MainViewController.mm */; };
 		6A11C9AC180B8E1400A30C7B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A11C9AB180B8E1400A30C7B /* Images.xcassets */; };
-		6A11C9B3180B8E1400A30C7B /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C9B2180B8E1400A30C7B /* XCTest.framework */; };
-		6A11C9B4180B8E1400A30C7B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C993180B8E1400A30C7B /* Foundation.framework */; };
-		6A11C9B5180B8E1400A30C7B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C997180B8E1400A30C7B /* UIKit.framework */; };
-		6A11C9BD180B8E1400A30C7B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6A11C9BB180B8E1400A30C7B /* InfoPlist.strings */; };
-		6A11C9BF180B8E1400A30C7B /* ShybotTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A11C9BE180B8E1400A30C7B /* ShybotTests.m */; };
 		6A11C9D0180B8EAD00A30C7B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C9CF180B8EAD00A30C7B /* CoreMotion.framework */; };
 		6A11C9D2180B8EB300A30C7B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C9D1180B8EB300A30C7B /* AVFoundation.framework */; };
 		6A11C9D4180B8EB900A30C7B /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C9D3180B8EB900A30C7B /* ExternalAccessory.framework */; };
 		6A11C9D6180B8EC000A30C7B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C9D5180B8EC000A30C7B /* QuartzCore.framework */; };
-		6A11C9DB180B95CD00A30C7B /* RMCharacter.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6A11C9D8180B95CD00A30C7B /* RMCharacter.bundle */; };
-		6A11C9DC180B95CD00A30C7B /* RMCharacter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C9D9180B95CD00A30C7B /* RMCharacter.framework */; };
-		6A11C9DD180B95CD00A30C7B /* RMCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C9DA180B95CD00A30C7B /* RMCore.framework */; };
-		6A11C9DF180B964E00A30C7B /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C9DE180B964E00A30C7B /* opencv2.framework */; };
 		6A11C9E1180B996F00A30C7B /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C9E0180B996F00A30C7B /* Accelerate.framework */; };
 		6A11C9E3180B997B00A30C7B /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C9E2180B997B00A30C7B /* AssetsLibrary.framework */; };
 		6A11C9E5180B998500A30C7B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C9E4180B998500A30C7B /* CoreMedia.framework */; };
@@ -35,19 +26,13 @@
 		6A11C9E9180B999400A30C7B /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A11C9E8180B999400A30C7B /* CoreImage.framework */; };
 		6A11C9EC180E8A4000A30C7B /* FaceDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6A11C9EB180E8A4000A30C7B /* FaceDetector.mm */; };
 		6A11C9EE180E8CCA00A30C7B /* haarcascade_frontalface_alt2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 6A11C9ED180E8CCA00A30C7B /* haarcascade_frontalface_alt2.xml */; };
-		6A11C9EF180E8CE200A30C7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A11C9A5180B8E1400A30C7B /* Main.storyboard */; };
 		6A7CB20F180F8EC3007DC1D5 /* OpenCVData.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6A7CB20E180F8EC3007DC1D5 /* OpenCVData.mm */; };
+		B251D72018159F610012AE65 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B251D71F18159F610012AE65 /* opencv2.framework */; };
+		B251D72518159F7D0012AE65 /* RMCharacter.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B251D72218159F7D0012AE65 /* RMCharacter.bundle */; };
+		B251D72618159F7D0012AE65 /* RMCharacter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B251D72318159F7D0012AE65 /* RMCharacter.framework */; };
+		B251D72718159F7D0012AE65 /* RMCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B251D72418159F7D0012AE65 /* RMCore.framework */; };
+		B251D7291815D02A0012AE65 /* Main_xcode4.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B251D7281815D02A0012AE65 /* Main_xcode4.storyboard */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		6A11C9B6180B8E1400A30C7B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6A11C988180B8E1400A30C7B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6A11C98F180B8E1400A30C7B;
-			remoteInfo = Shybot;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		6A11C990180B8E1400A30C7B /* Shybot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shybot.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,19 +49,10 @@
 		6A11C9A8180B8E1400A30C7B /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		6A11C9A9180B8E1400A30C7B /* MainViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MainViewController.mm; sourceTree = "<group>"; };
 		6A11C9AB180B8E1400A30C7B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		6A11C9B1180B8E1400A30C7B /* ShybotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShybotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		6A11C9B2180B8E1400A30C7B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		6A11C9BA180B8E1400A30C7B /* ShybotTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ShybotTests-Info.plist"; sourceTree = "<group>"; };
-		6A11C9BC180B8E1400A30C7B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		6A11C9BE180B8E1400A30C7B /* ShybotTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShybotTests.m; sourceTree = "<group>"; };
 		6A11C9CF180B8EAD00A30C7B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		6A11C9D1180B8EB300A30C7B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		6A11C9D3180B8EB900A30C7B /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		6A11C9D5180B8EC000A30C7B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		6A11C9D8180B95CD00A30C7B /* RMCharacter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = RMCharacter.bundle; sourceTree = "<group>"; };
-		6A11C9D9180B95CD00A30C7B /* RMCharacter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RMCharacter.framework; sourceTree = "<group>"; };
-		6A11C9DA180B95CD00A30C7B /* RMCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RMCore.framework; sourceTree = "<group>"; };
-		6A11C9DE180B964E00A30C7B /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../opencv2.framework; sourceTree = "<group>"; };
 		6A11C9E0180B996F00A30C7B /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		6A11C9E2180B997B00A30C7B /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		6A11C9E4180B998500A30C7B /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -87,6 +63,11 @@
 		6A11C9ED180E8CCA00A30C7B /* haarcascade_frontalface_alt2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_frontalface_alt2.xml; sourceTree = "<group>"; };
 		6A7CB20D180F8EC3007DC1D5 /* OpenCVData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenCVData.h; sourceTree = "<group>"; };
 		6A7CB20E180F8EC3007DC1D5 /* OpenCVData.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCVData.mm; sourceTree = "<group>"; };
+		B251D71F18159F610012AE65 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../opencv2.framework; sourceTree = "<group>"; };
+		B251D72218159F7D0012AE65 /* RMCharacter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = RMCharacter.bundle; sourceTree = "<group>"; };
+		B251D72318159F7D0012AE65 /* RMCharacter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RMCharacter.framework; sourceTree = "<group>"; };
+		B251D72418159F7D0012AE65 /* RMCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RMCore.framework; sourceTree = "<group>"; };
+		B251D7281815D02A0012AE65 /* Main_xcode4.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_xcode4.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,22 +84,12 @@
 				6A11C9D4180B8EB900A30C7B /* ExternalAccessory.framework in Frameworks */,
 				6A11C9D2180B8EB300A30C7B /* AVFoundation.framework in Frameworks */,
 				6A11C9D0180B8EAD00A30C7B /* CoreMotion.framework in Frameworks */,
-				6A11C9DD180B95CD00A30C7B /* RMCore.framework in Frameworks */,
 				6A11C996180B8E1400A30C7B /* CoreGraphics.framework in Frameworks */,
-				6A11C9DC180B95CD00A30C7B /* RMCharacter.framework in Frameworks */,
 				6A11C998180B8E1400A30C7B /* UIKit.framework in Frameworks */,
-				6A11C9DF180B964E00A30C7B /* opencv2.framework in Frameworks */,
 				6A11C994180B8E1400A30C7B /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6A11C9AE180B8E1400A30C7B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6A11C9B3180B8E1400A30C7B /* XCTest.framework in Frameworks */,
-				6A11C9B5180B8E1400A30C7B /* UIKit.framework in Frameworks */,
-				6A11C9B4180B8E1400A30C7B /* Foundation.framework in Frameworks */,
+				B251D72018159F610012AE65 /* opencv2.framework in Frameworks */,
+				B251D72618159F7D0012AE65 /* RMCharacter.framework in Frameworks */,
+				B251D72718159F7D0012AE65 /* RMCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,7 +100,6 @@
 			isa = PBXGroup;
 			children = (
 				6A11C999180B8E1400A30C7B /* Shybot */,
-				6A11C9B8180B8E1400A30C7B /* ShybotTests */,
 				6A11C992180B8E1400A30C7B /* Frameworks */,
 				6A11C991180B8E1400A30C7B /* Products */,
 			);
@@ -139,7 +109,6 @@
 			isa = PBXGroup;
 			children = (
 				6A11C990180B8E1400A30C7B /* Shybot.app */,
-				6A11C9B1180B8E1400A30C7B /* ShybotTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -147,13 +116,13 @@
 		6A11C992180B8E1400A30C7B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B251D72118159F7D0012AE65 /* Romo */,
+				B251D71F18159F610012AE65 /* opencv2.framework */,
 				6A11C9E8180B999400A30C7B /* CoreImage.framework */,
 				6A11C9E6180B998B00A30C7B /* CoreVideo.framework */,
 				6A11C9E4180B998500A30C7B /* CoreMedia.framework */,
 				6A11C9E2180B997B00A30C7B /* AssetsLibrary.framework */,
 				6A11C9E0180B996F00A30C7B /* Accelerate.framework */,
-				6A11C9DE180B964E00A30C7B /* opencv2.framework */,
-				6A11C9D7180B95CD00A30C7B /* Romo */,
 				6A11C9D5180B8EC000A30C7B /* QuartzCore.framework */,
 				6A11C9D3180B8EB900A30C7B /* ExternalAccessory.framework */,
 				6A11C9D1180B8EB300A30C7B /* AVFoundation.framework */,
@@ -161,7 +130,6 @@
 				6A11C993180B8E1400A30C7B /* Foundation.framework */,
 				6A11C995180B8E1400A30C7B /* CoreGraphics.framework */,
 				6A11C997180B8E1400A30C7B /* UIKit.framework */,
-				6A11C9B2180B8E1400A30C7B /* XCTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -170,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				6A11C9A5180B8E1400A30C7B /* Main.storyboard */,
+				B251D7281815D02A0012AE65 /* Main_xcode4.storyboard */,
 				6A7CB20D180F8EC3007DC1D5 /* OpenCVData.h */,
 				6A7CB20E180F8EC3007DC1D5 /* OpenCVData.mm */,
 				6A11C9EA180E8A4000A30C7B /* FaceDetector.h */,
@@ -196,30 +165,12 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		6A11C9B8180B8E1400A30C7B /* ShybotTests */ = {
+		B251D72118159F7D0012AE65 /* Romo */ = {
 			isa = PBXGroup;
 			children = (
-				6A11C9BE180B8E1400A30C7B /* ShybotTests.m */,
-				6A11C9B9180B8E1400A30C7B /* Supporting Files */,
-			);
-			path = ShybotTests;
-			sourceTree = "<group>";
-		};
-		6A11C9B9180B8E1400A30C7B /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				6A11C9BA180B8E1400A30C7B /* ShybotTests-Info.plist */,
-				6A11C9BB180B8E1400A30C7B /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		6A11C9D7180B95CD00A30C7B /* Romo */ = {
-			isa = PBXGroup;
-			children = (
-				6A11C9D8180B95CD00A30C7B /* RMCharacter.bundle */,
-				6A11C9D9180B95CD00A30C7B /* RMCharacter.framework */,
-				6A11C9DA180B95CD00A30C7B /* RMCore.framework */,
+				B251D72218159F7D0012AE65 /* RMCharacter.bundle */,
+				B251D72318159F7D0012AE65 /* RMCharacter.framework */,
+				B251D72418159F7D0012AE65 /* RMCore.framework */,
 			);
 			name = Romo;
 			path = ../Romo;
@@ -244,24 +195,6 @@
 			productName = Shybot;
 			productReference = 6A11C990180B8E1400A30C7B /* Shybot.app */;
 			productType = "com.apple.product-type.application";
-		};
-		6A11C9B0180B8E1400A30C7B /* ShybotTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6A11C9C5180B8E1400A30C7B /* Build configuration list for PBXNativeTarget "ShybotTests" */;
-			buildPhases = (
-				6A11C9AD180B8E1400A30C7B /* Sources */,
-				6A11C9AE180B8E1400A30C7B /* Frameworks */,
-				6A11C9AF180B8E1400A30C7B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				6A11C9B7180B8E1400A30C7B /* PBXTargetDependency */,
-			);
-			name = ShybotTests;
-			productName = ShybotTests;
-			productReference = 6A11C9B1180B8E1400A30C7B /* ShybotTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -292,7 +225,6 @@
 			projectRoot = "";
 			targets = (
 				6A11C98F180B8E1400A30C7B /* Shybot */,
-				6A11C9B0180B8E1400A30C7B /* ShybotTests */,
 			);
 		};
 /* End PBXProject section */
@@ -302,19 +234,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A11C9EF180E8CE200A30C7B /* Main.storyboard in Resources */,
 				6A11C9AC180B8E1400A30C7B /* Images.xcassets in Resources */,
 				6A11C99E180B8E1400A30C7B /* InfoPlist.strings in Resources */,
 				6A11C9EE180E8CCA00A30C7B /* haarcascade_frontalface_alt2.xml in Resources */,
-				6A11C9DB180B95CD00A30C7B /* RMCharacter.bundle in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6A11C9AF180B8E1400A30C7B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6A11C9BD180B8E1400A30C7B /* InfoPlist.strings in Resources */,
+				B251D72518159F7D0012AE65 /* RMCharacter.bundle in Resources */,
+				B251D7291815D02A0012AE65 /* Main_xcode4.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,23 +257,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6A11C9AD180B8E1400A30C7B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6A11C9BF180B8E1400A30C7B /* ShybotTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		6A11C9B7180B8E1400A30C7B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6A11C98F180B8E1400A30C7B /* Shybot */;
-			targetProxy = 6A11C9B6180B8E1400A30C7B /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		6A11C99C180B8E1400A30C7B /* InfoPlist.strings */ = {
@@ -366,14 +274,6 @@
 				6A11C9A6180B8E1400A30C7B /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		6A11C9BB180B8E1400A30C7B /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6A11C9BC180B8E1400A30C7B /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -415,6 +315,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv7 armv7s armv6";
 			};
 			name = Debug;
 		};
@@ -448,24 +349,30 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv7s armv6";
 			};
 			name = Release;
 		};
 		6A11C9C3180B8E1400A30C7B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Chia-Hsun Lee (7ZLA7P39EB)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/jackielee/code/Shybot/Romo,
-					/Users/jackielee/code/shybot/Romo,
-					/Users/jackielee/code/shybot,
+					"\"$(SRCROOT)/..\"",
+					"\"$(SRCROOT)/../Romo\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shybot/Shybot-Prefix.pch";
 				INFOPLIST_FILE = "Shybot/Shybot-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "ED851BE0-2D96-4013-8E4E-B50869548D45";
+				VALID_ARCHS = "armv6 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -473,61 +380,24 @@
 		6A11C9C4180B8E1400A30C7B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Chia-Hsun Lee (7ZLA7P39EB)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/jackielee/code/Shybot/Romo,
-					/Users/jackielee/code/shybot/Romo,
-					/Users/jackielee/code/shybot,
+					"\"$(SRCROOT)/..\"",
+					"\"$(SRCROOT)/../Romo\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shybot/Shybot-Prefix.pch";
 				INFOPLIST_FILE = "Shybot/Shybot-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "ED851BE0-2D96-4013-8E4E-B50869548D45";
+				VALID_ARCHS = "armv7 armv7s armv6";
 				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		6A11C9C6180B8E1400A30C7B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Shybot.app/Shybot";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Shybot/Shybot-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "ShybotTests/ShybotTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		6A11C9C7180B8E1400A30C7B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Shybot.app/Shybot";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Shybot/Shybot-Prefix.pch";
-				INFOPLIST_FILE = "ShybotTests/ShybotTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
 		};
@@ -548,15 +418,6 @@
 			buildConfigurations = (
 				6A11C9C3180B8E1400A30C7B /* Debug */,
 				6A11C9C4180B8E1400A30C7B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		6A11C9C5180B8E1400A30C7B /* Build configuration list for PBXNativeTarget "ShybotTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6A11C9C6180B8E1400A30C7B /* Debug */,
-				6A11C9C7180B8E1400A30C7B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
