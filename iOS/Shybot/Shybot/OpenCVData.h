@@ -1,9 +1,9 @@
 //
-//  FaceDetector.h
+//  OpenCVData.h
 //  FaceRecognition
 //
 //  Created by Michael Peterson on 2012-11-16.
-//  Modified by Jackie Lee on 2013-10-16
+//
 //
 
 /*
@@ -28,17 +28,18 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
- */
+*/
 
 
 #import <Foundation/Foundation.h>
 #import <opencv2/highgui/cap_ios.h>
 
-@interface FaceDetector : NSObject
-{
-    cv::CascadeClassifier _faceCascade;
-}
+@interface OpenCVData : NSObject
 
-- (std::vector<cv::Rect>)facesFromImage:(cv::Mat&)image;
-
++ (NSData *)serializeCvMat:(cv::Mat&)cvMat;
++ (cv::Mat)dataToMat:(NSData *)data width:(NSNumber *)width height:(NSNumber *)height;
++ (CGRect)faceToCGRect:(cv::Rect)face;
++ (UIImage *)UIImageFromMat:(cv::Mat)image;
++ (cv::Mat)cvMatFromUIImage:(UIImage *)image;
++ (cv::Mat)cvMatFromUIImage:(UIImage *)image usingColorSpace:(int)outputSpace;
 @end
