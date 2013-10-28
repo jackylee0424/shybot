@@ -5,7 +5,9 @@ Shybot is an emotion-driven robot like a shy creature which recognizes friends o
 interacts with them differently. Shybot was a 
 [research project](http://affect.media.mit.edu/projects.php?id=2306 "Affective Computing Group") 
 originated from the Autism Theory and Technology class 
-(co-taught by Rosalind Picard, Cynthia Breazeal, and Sherry Turkle) at MIT Media Lab in 2007. 
+(co-taught by [Rosalind Picard](http://www.bbc.co.uk/news/technology-24652902?SThisFB), 
+[Cynthia Breazeal](http://www.ted.com/talks/cynthia_breazeal_the_rise_of_personal_robots.html), and 
+[Sherry Turkle](http://www.youtube.com/watch?v=Ikn-_myAfhQ)) at MIT Media Lab in 2007. 
 
 [Short video from '07 (.m4v)](https://github.com/jackylee0424/shybot/blob/master/doc/shybot_07short.m4v?raw=true)
 
