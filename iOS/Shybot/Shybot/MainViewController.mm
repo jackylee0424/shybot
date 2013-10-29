@@ -169,8 +169,11 @@
     
     // personality setup (need to move to a new class)
     personality = [[NSMutableDictionary alloc] init];
-    [personality setObject:[NSNumber numberWithInt:55] forKey:@"face_size_uneasy"];
-    [personality setObject:[NSNumber numberWithInt:70] forKey:@"face_size_nervous"];
+    [personality setObject:[NSNumber numberWithInt: 55] forKey:@"face_size_uneasy"];
+    [personality setObject:[NSNumber numberWithInt: 70] forKey:@"face_size_nervous"];
+    [personality setObject:[NSNumber numberWithFloat: .1] forKey:@"arousal"];
+    [personality setObject:[NSNumber numberWithFloat: .1] forKey:@"valence"];
+    [personality setObject:[NSNumber numberWithFloat: 0.0] forKey:@"familiarity_to_all_users"]; //familiarity_to_IDs
     
     self.faceDetector = [[FaceDetector alloc] init];
     
