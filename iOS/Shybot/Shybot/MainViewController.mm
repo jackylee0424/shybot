@@ -28,6 +28,12 @@
             [self highlightFace:[OpenCVData faceToCGRect:faces[0]] withColor:[[UIColor cyanColor] CGColor]];
             [self.debug_status setText:[NSString stringWithFormat:@"face:(%d, %d), size: %d",faces[0].x,faces[0].y,faces[0].width]];
             
+            // show face ROI
+            cv::Rect myROI(faces[0].x,faces[0].y,faces[0].width,faces[0].height);
+            cv::Mat croppedImage;
+            cv::Mat(image, myROI).copyTo(croppedImage);
+            self.cvroiview.image = [OpenCVData UIImageFromMat:croppedImage];
+            
             // speed up shybot's heart rate
             [self.robot.LEDs pulseWithPeriod:.8 direction:RMCoreLEDPulseDirectionUpAndDown];
             
@@ -137,12 +143,29 @@
         [self.robot stopDriving];
     }*/
     
+    
+    
+    
+    
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    /*
+    // got some problem of duplicate symbols.
+    // Create firebase data repo
+    f = [[Firebase alloc] initWithUrl:@"https://shybot.firebaseIO.com/"];
+    
+    // Write data to Firebase
+    [f setValue:@"connected" forKey:@"state"];
+    
+    // Read data and react to changes
+    [f observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        NSLog(@"%@ -> %@", snapshot.name, snapshot.value);
+    }];*/
     
     // personality setup (need to move to a new class)
     personality = [[NSMutableDictionary alloc] init];

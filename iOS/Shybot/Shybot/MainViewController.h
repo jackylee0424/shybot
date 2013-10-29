@@ -13,12 +13,10 @@
 #import "FaceDetector.h"
 #import "OpenCVData.h"
 
-
 using namespace cv;
 
 @interface MainViewController : UIViewController<RMCoreDelegate, CvVideoCameraDelegate>{
     NSMutableDictionary * personality;
-    
 }
 
 // motor / LED control
@@ -27,6 +25,7 @@ using namespace cv;
 // for face detection
 @property (nonatomic, strong) CvVideoCamera* videoCamera;
 @property (nonatomic, strong) IBOutlet UIImageView * cvcameraview;
+@property (nonatomic, strong) IBOutlet UIImageView * cvroiview;
 @property (nonatomic, strong) FaceDetector *faceDetector;
 @property (nonatomic, strong) CALayer *featureLayer;
 @property (nonatomic, readwrite) int dnumoffaces;
