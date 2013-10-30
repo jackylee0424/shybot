@@ -34,6 +34,8 @@
 		6A11C9EC180E8A4000A30C7B /* FaceDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6A11C9EB180E8A4000A30C7B /* FaceDetector.mm */; };
 		6A11C9EE180E8CCA00A30C7B /* haarcascade_frontalface_alt2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 6A11C9ED180E8CCA00A30C7B /* haarcascade_frontalface_alt2.xml */; };
 		6A7CB20F180F8EC3007DC1D5 /* OpenCVData.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6A7CB20E180F8EC3007DC1D5 /* OpenCVData.mm */; };
+		B21148E51820D1FC002046BB /* CustomFaceRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = B21148E41820D1FC002046BB /* CustomFaceRecognizer.mm */; };
+		B21148E71820D225002046BB /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B21148E61820D225002046BB /* libsqlite3.dylib */; };
 		B251D72018159F610012AE65 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B251D71F18159F610012AE65 /* opencv2.framework */; };
 		B251D7291815D02A0012AE65 /* Main_xcode4.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B251D7281815D02A0012AE65 /* Main_xcode4.storyboard */; };
 /* End PBXBuildFile section */
@@ -74,6 +76,9 @@
 		6A11C9ED180E8CCA00A30C7B /* haarcascade_frontalface_alt2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_frontalface_alt2.xml; sourceTree = "<group>"; };
 		6A7CB20D180F8EC3007DC1D5 /* OpenCVData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenCVData.h; sourceTree = "<group>"; };
 		6A7CB20E180F8EC3007DC1D5 /* OpenCVData.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCVData.mm; sourceTree = "<group>"; };
+		B21148E31820D1FC002046BB /* CustomFaceRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomFaceRecognizer.h; sourceTree = "<group>"; };
+		B21148E41820D1FC002046BB /* CustomFaceRecognizer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CustomFaceRecognizer.mm; sourceTree = "<group>"; };
+		B21148E61820D225002046BB /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		B251D71F18159F610012AE65 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../opencv2.framework; sourceTree = "<group>"; };
 		B251D7281815D02A0012AE65 /* Main_xcode4.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_xcode4.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -83,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B21148E71820D225002046BB /* libsqlite3.dylib in Frameworks */,
 				4E33F8CE181DA6DA006E1E3E /* SystemConfiguration.framework in Frameworks */,
 				4E33F8CC181DA6D1006E1E3E /* Security.framework in Frameworks */,
 				4E33F8CA181DA6C6006E1E3E /* CFNetwork.framework in Frameworks */,
@@ -139,6 +145,7 @@
 		6A11C992180B8E1400A30C7B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B21148E61820D225002046BB /* libsqlite3.dylib */,
 				4E33F8CF181DA776006E1E3E /* Romo */,
 				4E33F8CD181DA6DA006E1E3E /* SystemConfiguration.framework */,
 				4E33F8CB181DA6D1006E1E3E /* Security.framework */,
@@ -166,10 +173,7 @@
 			children = (
 				6A11C9A5180B8E1400A30C7B /* Main.storyboard */,
 				B251D7281815D02A0012AE65 /* Main_xcode4.storyboard */,
-				6A7CB20D180F8EC3007DC1D5 /* OpenCVData.h */,
-				6A7CB20E180F8EC3007DC1D5 /* OpenCVData.mm */,
-				6A11C9EA180E8A4000A30C7B /* FaceDetector.h */,
-				6A11C9EB180E8A4000A30C7B /* FaceDetector.mm */,
+				B21148E818214C3E002046BB /* Vendor */,
 				6A11C9A2180B8E1400A30C7B /* MainAppDelegate.h */,
 				6A11C9A3180B8E1400A30C7B /* MainAppDelegate.m */,
 				6A11C9A8180B8E1400A30C7B /* MainViewController.h */,
@@ -190,6 +194,19 @@
 				6A11C9A1180B8E1400A30C7B /* Shybot-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B21148E818214C3E002046BB /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				B21148E31820D1FC002046BB /* CustomFaceRecognizer.h */,
+				B21148E41820D1FC002046BB /* CustomFaceRecognizer.mm */,
+				6A7CB20D180F8EC3007DC1D5 /* OpenCVData.h */,
+				6A7CB20E180F8EC3007DC1D5 /* OpenCVData.mm */,
+				6A11C9EA180E8A4000A30C7B /* FaceDetector.h */,
+				6A11C9EB180E8A4000A30C7B /* FaceDetector.mm */,
+			);
+			name = Vendor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,11 +238,6 @@
 				CLASSPREFIX = Main;
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = shybot.org;
-				TargetAttributes = {
-					6A11C9B0180B8E1400A30C7B = {
-						TestTargetID = 6A11C98F180B8E1400A30C7B;
-					};
-				};
 			};
 			buildConfigurationList = 6A11C98B180B8E1400A30C7B /* Build configuration list for PBXProject "Shybot" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -268,6 +280,7 @@
 				6A11C9EC180E8A4000A30C7B /* FaceDetector.mm in Sources */,
 				6A11C9A0180B8E1400A30C7B /* main.m in Sources */,
 				6A7CB20F180F8EC3007DC1D5 /* OpenCVData.mm in Sources */,
+				B21148E51820D1FC002046BB /* CustomFaceRecognizer.mm in Sources */,
 				6A11C9AA180B8E1400A30C7B /* MainViewController.mm in Sources */,
 				6A11C9A4180B8E1400A30C7B /* MainAppDelegate.m in Sources */,
 			);
