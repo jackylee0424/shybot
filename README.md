@@ -1,7 +1,7 @@
 Origin
 ======
 
-Can a robot "like" a person? How can a robot build a relationship with its "friends"? 
+Can a robot _like_ a person? How can a robot build a relationship with its _friends_? 
 Shybot is here to explore these questions.
 Shybot is an emotion-driven robot like a shy creature which recognizes friends or strangers and 
 interacts with them differently. Shybot was a 
