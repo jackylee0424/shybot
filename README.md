@@ -1,6 +1,8 @@
-Shybot
+Origin
 ======
 
+Can a robot _like or dislike_ a person? How can a robot build a relationship with its _friends_? 
+Shybot is here to explore these questions.
 Shybot is an emotion-driven robot like a shy creature which recognizes friends or strangers and 
 interacts with them differently. Shybot was a 
 [research project](http://affect.media.mit.edu/projects.php?id=2306 "Affective Computing Group") 
