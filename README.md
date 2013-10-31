@@ -1,7 +1,7 @@
 Origin
 ======
 
-Can a [robot](http://www.youtube.com/watch?v=3PMlDidyG_I "Measure of a Man") _like or dislike_ a person? How can a robot build a relationship with its _friends_? 
+Can a [robot](http://www.youtube.com/watch?v=3PMlDidyG_I "StarTrek: Measure of a Man") _like or dislike_ a person? How can a robot build a relationship with its _friends_? 
 Shybot is here to explore these questions.
 Shybot is an emotion-driven robot like a shy creature which recognizes friends or strangers and 
 interacts with them differently. Shybot was a 
