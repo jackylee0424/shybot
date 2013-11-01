@@ -8,6 +8,8 @@
 
 #import "MainViewController.h"
 
+#define CAPTURE_FPS 30
+
 @interface MainViewController ()
 
 @end
@@ -19,6 +21,15 @@
 #ifdef __cplusplus
 - (void)processImage:(cv::Mat&)image;
 {
+    
+    // Only process every CAPTURE_FPS'th frame (every 1s)
+    if (self.frameNum == CAPTURE_FPS) {
+        [self parseFaces:[self.faceDetector facesFromImage:image] forImage:image];
+        self.frameNum = 0;
+    }
+    self.frameNum++;
+    
+    // face interaction
     const std::vector<cv::Rect> faces = [self.faceDetector facesFromImage:image];
     if (faces.size()>0){
         self.dnumoffaces =1;
@@ -77,6 +88,63 @@
          
     }
 }
+
+- (bool)learnFace:(const std::vector<cv::Rect> &)faces forImage:(cv::Mat&)image personID:(int)pid
+{
+
+    cv::Rect face = faces[0];
+    [self.faceRecognizer learnFace:face ofPersonID:pid fromImage:image]; // need to find a way to make new IDs
+    NSLog(@"learn a face");
+    
+    return YES;
+}
+
+- (void)parseFaces:(const std::vector<cv::Rect> &)faces forImage:(cv::Mat&)image
+{
+    cv::Rect face = faces[0];
+
+    CGColor *highlightColor = [[UIColor redColor] CGColor];
+    
+    if (self.modelAvailable) {
+        NSDictionary *match = [self.faceRecognizer recognizeFace:face inImage:image];
+        
+        if ([match objectForKey:@"personID"] != [NSNumber numberWithInt:-1]) {
+            
+            NSLog(@"%@: %.2f", [match objectForKey:@"personName"], [[match objectForKey:@"confidence"]floatValue]);
+            
+            // confidence < thresold
+            if ([[match objectForKey:@"confidence"]floatValue]<2400){
+                highlightColor = [[UIColor greenColor] CGColor];
+            
+            }else{
+                // low confidence
+                NSLog(@"low confidence face recog");
+                [self learnFace:faces forImage:image personID:10];
+            }
+            
+        }else{
+            // no match
+            NSLog(@"no match. learn this new face.");
+            [self learnFace:faces forImage:image personID:10];
+        }
+    
+    }else{
+        
+        // no model, need to build one
+        
+        self.newfaceNumbers++;
+        
+        if (self.newfaceNumbers<10){
+            [self learnFace:faces forImage:image personID:10];
+        }else{
+            // save 10 images then build a model
+            self.modelAvailable = [self.faceRecognizer trainModel];
+        }
+        
+    }
+
+}
+
 #endif
 
 - (void)highlightFace:(CGRect)faceRect withColor:(CGColor *)color
@@ -97,6 +165,8 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    self.modelAvailable = [self.faceRecognizer trainModel]; // need to decide when to re-train the model
 
     [self.videoCamera start];
 }
@@ -149,23 +219,23 @@
     
 }
 
+-(void) setupCamera{
+    self.videoCamera = [[CvVideoCamera alloc] initWithParentView:self.cvcameraview];
+    self.videoCamera.delegate = self;
+    self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionFront;
+    self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPresetLow;
+    self.videoCamera.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;
+    self.videoCamera.defaultFPS = CAPTURE_FPS;
+    self.videoCamera.grayscaleMode = YES;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    /*
-    // got some problem of duplicate symbols.
-    // Create firebase data repo
-    f = [[Firebase alloc] initWithUrl:@"https://shybot.firebaseIO.com/"];
-    
-    // Write data to Firebase
-    [f setValue:@"connected" forKey:@"state"];
-    
-    // Read data and react to changes
-    [f observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
-        NSLog(@"%@ -> %@", snapshot.name, snapshot.value);
-    }];*/
+    self.faceDetector = [[FaceDetector alloc] init];
+    self.faceRecognizer = [[CustomFaceRecognizer alloc] initWithEigenFaceRecognizer];
     
     // personality setup (need to move to a new class)
     personality = [[NSMutableDictionary alloc] init];
@@ -175,15 +245,7 @@
     [personality setObject:[NSNumber numberWithFloat: .1] forKey:@"valence"];
     [personality setObject:[NSNumber numberWithFloat: 0.0] forKey:@"familiarity_to_all_users"]; //familiarity_to_IDs
     
-    self.faceDetector = [[FaceDetector alloc] init];
-    
-    self.videoCamera = [[CvVideoCamera alloc] initWithParentView:self.cvcameraview];
-    self.videoCamera.delegate = self;
-    self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionFront;
-    self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPresetLow;
-    self.videoCamera.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;
-    self.videoCamera.defaultFPS = 30;
-    self.videoCamera.grayscaleMode = YES;
+    [self setupCamera];
     
     [RMCore setDelegate:self];
 

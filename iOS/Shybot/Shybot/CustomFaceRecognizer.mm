@@ -169,10 +169,11 @@
 {
     // Pull the grayscale face ROI out of the captured image
     cv::Mat onlyTheFace;
-    cv::cvtColor(image(face), onlyTheFace, CV_RGB2GRAY);
+    //cv::cvtColor(image(face), onlyTheFace, CV_RGB2GRAY);
     
     // Standardize the face to 100x100 pixels
-    cv::resize(onlyTheFace, onlyTheFace, cv::Size(100, 100), 0, 0);
+    //cv::resize(onlyTheFace, onlyTheFace, cv::Size(100, 100), 0, 0);
+    cv::resize(image(face), onlyTheFace, cv::Size(100, 100), 0, 0);
     
     return onlyTheFace;
 }
