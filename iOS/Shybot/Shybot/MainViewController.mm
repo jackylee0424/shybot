@@ -5,6 +5,8 @@
 //  Created by Jackie Lee on 10/13/13.
 //  Copyright (c) 2013 shybot.org. All rights reserved.
 //
+//  Warning! Not fully functioning yet!
+//
 
 #import "MainViewController.h"
 
@@ -92,6 +94,10 @@
 - (bool)learnFace:(const std::vector<cv::Rect> &)faces forImage:(cv::Mat&)image personID:(int)pid
 {
 
+    if (faces.size() != 1) {
+        return 0;
+    }
+    
     cv::Rect face = faces[0];
     [self.faceRecognizer learnFace:face ofPersonID:pid fromImage:image]; // need to find a way to make new IDs
     NSLog(@"learn a face");
@@ -101,6 +107,10 @@
 
 - (void)parseFaces:(const std::vector<cv::Rect> &)faces forImage:(cv::Mat&)image
 {
+    if (faces.size() != 1) {
+        return;
+    }
+
     cv::Rect face = faces[0];
 
     CGColor *highlightColor = [[UIColor redColor] CGColor];
@@ -131,11 +141,13 @@
     }else{
         
         // no model, need to build one
+        // need some alone time to build the model
         
         self.newfaceNumbers++;
+        int pid = [self.faceRecognizer newPersonWithName:[NSString stringWithFormat:@"human%d",0]];
         
         if (self.newfaceNumbers<10){
-            [self learnFace:faces forImage:image personID:10];
+            [self learnFace:faces forImage:image personID:pid];
         }else{
             // save 10 images then build a model
             self.modelAvailable = [self.faceRecognizer trainModel];
@@ -194,6 +206,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    
 
 }
 
@@ -236,6 +249,8 @@
     
     self.faceDetector = [[FaceDetector alloc] init];
     self.faceRecognizer = [[CustomFaceRecognizer alloc] initWithEigenFaceRecognizer];
+    
+    NSLog(@"all people: %@",[self.faceRecognizer getAllPeople]);
     
     // personality setup (need to move to a new class)
     personality = [[NSMutableDictionary alloc] init];
