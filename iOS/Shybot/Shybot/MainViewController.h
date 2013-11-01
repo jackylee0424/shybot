@@ -33,7 +33,9 @@ using namespace cv;
 @property (nonatomic, readwrite) int dnumoffaces;
 @property (nonatomic) NSInteger frameNum;
 @property (nonatomic) BOOL modelAvailable;
+@property (nonatomic) BOOL isLearning; // is it a good time/environment to learn?
 @property (nonatomic) NSInteger newfaceNumbers;
+@property (nonatomic) NSInteger currentTarget; // current target to learn from
 
 // debug
 @property (nonatomic, strong) IBOutlet UILabel * debug_status;

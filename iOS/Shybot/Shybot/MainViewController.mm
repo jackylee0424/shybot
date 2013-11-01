@@ -23,15 +23,20 @@
 #ifdef __cplusplus
 - (void)processImage:(cv::Mat&)image;
 {
+    // environment condition
+    /*
+    do something to setup a good learning atmosphere
+    */
+    //self.isLearning = FALSE;
     
-    // Only process every CAPTURE_FPS'th frame (every 1s)
+    // face recog and face learning (every 1s)
     if (self.frameNum == CAPTURE_FPS) {
         [self parseFaces:[self.faceDetector facesFromImage:image] forImage:image];
         self.frameNum = 0;
     }
     self.frameNum++;
     
-    // face interaction
+    // face interaction (reaction to drive motors, running in every frame)
     const std::vector<cv::Rect> faces = [self.faceDetector facesFromImage:image];
     if (faces.size()>0){
         self.dnumoffaces =1;
@@ -133,6 +138,7 @@
             }
             
         }else{
+            
             // no match
             NSLog(@"no match. learn this new face.");
             [self learnFace:faces forImage:image personID:10];
@@ -140,18 +146,35 @@
     
     }else{
         
+        
         // no model, need to build one
         // need some alone time to build the model
         
-        self.newfaceNumbers++;
-        int pid = [self.faceRecognizer newPersonWithName:[NSString stringWithFormat:@"human%d",0]];
+        NSLog(@"stranger face found, start learning?");
         
-        if (self.newfaceNumbers<10){
-            [self learnFace:faces forImage:image personID:pid];
-        }else{
-            // save 10 images then build a model
-            self.modelAvailable = [self.faceRecognizer trainModel];
+        if (self.isLearning) {
+            
+            if (self.newfaceNumbers<1)
+            {
+                self.currentTarget = [self.faceRecognizer newPersonWithName:[NSString stringWithFormat:@"human%d",0]];
+            }
+            else
+            {
+                if (self.newfaceNumbers<10){
+                    [self learnFace:faces forImage:image personID:self.currentTarget];
+                }else{
+                    // save 10 images then build a model
+                    self.modelAvailable = [self.faceRecognizer trainModel];
+                }
+            }
+            
+            self.newfaceNumbers++;
         }
+        
+        
+        
+        
+        
         
     }
 
@@ -266,6 +289,8 @@
 
     self.dnumoffaces = 0;
     [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(check_environment) userInfo:nil repeats:YES];
+    
+    self.newfaceNumbers = 0; // reset learning at start
     
 }
 
