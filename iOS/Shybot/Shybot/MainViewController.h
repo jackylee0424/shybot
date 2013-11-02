@@ -10,13 +10,18 @@
 #import <RMCore/RMCore.h>
 #import <RMCharacter/RMCharacter.h>
 #import <opencv2/highgui/cap_ios.h>
+
 #import "FaceDetector.h"
 #import "OpenCVData.h"
 #import "CustomFaceRecognizer.h"
+#import "WebSocket/WebSocket.h"
 
 using namespace cv;
 
-@interface MainViewController : UIViewController<RMCoreDelegate, CvVideoCameraDelegate>{
+@interface MainViewController : UIViewController<   RMCoreDelegate,
+                                                    CvVideoCameraDelegate,
+                                                    WebSocketDelegate   >
+{
     NSMutableDictionary * personality;
 }
 
@@ -36,6 +41,8 @@ using namespace cv;
 @property (nonatomic) BOOL isLearning; // is it a good time/environment to learn?
 @property (nonatomic) NSInteger newfaceNumbers;
 @property (nonatomic) NSInteger currentTarget; // current target to learn from
+
+@property (nonatomic, strong) WebSocket* webSocket;
 
 // debug
 @property (nonatomic, strong) IBOutlet UILabel * debug_status;

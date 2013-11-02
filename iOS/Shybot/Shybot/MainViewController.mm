@@ -29,12 +29,25 @@
     */
     //self.isLearning = FALSE;
     
+    // send video frames to remote server
+    if ([self.webSocket connected]){
+        // need to dispatch to main thread for sending ws packets
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            //NSLog(@"ws connected. try sending packets");
+            NSData * imageData = UIImageJPEGRepresentation([OpenCVData UIImageFromMat:image],.5);
+            NSString * img64str = [imageData base64Encoding];
+            [self.webSocket send:[NSString stringWithFormat:@"{\"base64ImageDataUrl\":\"data:image/jpeg;charset=utf-8;base64,%@\"}",img64str]];
+        });
+    }
+    
     // face recog and face learning (every 1s)
+    self.frameNum++;
     if (self.frameNum == CAPTURE_FPS) {
-        [self parseFaces:[self.faceDetector facesFromImage:image] forImage:image];
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self parseFaces:[self.faceDetector facesFromImage:image] forImage:image];
+        });
         self.frameNum = 0;
     }
-    self.frameNum++;
     
     // face interaction (reaction to drive motors, running in every frame)
     const std::vector<cv::Rect> faces = [self.faceDetector facesFromImage:image];
@@ -118,7 +131,7 @@
 
     cv::Rect face = faces[0];
 
-    CGColor *highlightColor = [[UIColor redColor] CGColor];
+    //CGColor *highlightColor = [[UIColor redColor] CGColor];
     
     if (self.modelAvailable) {
         NSDictionary *match = [self.faceRecognizer recognizeFace:face inImage:image];
@@ -129,7 +142,7 @@
             
             // confidence < thresold
             if ([[match objectForKey:@"confidence"]floatValue]<2400){
-                highlightColor = [[UIColor greenColor] CGColor];
+                //highlightColor = [[UIColor greenColor] CGColor];
             
             }else{
                 // low confidence
@@ -249,10 +262,6 @@
         [self.robot stopDriving];
     }*/
     
-    
-    
-    
-    
 }
 
 -(void) setupCamera{
@@ -269,6 +278,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    self.webSocket = [[WebSocket alloc] initWithURLString:@"ws://192.168.1.121:8765/wsb" delegate:self];
+    [self.webSocket open];
     
     self.faceDetector = [[FaceDetector alloc] init];
     self.faceRecognizer = [[CustomFaceRecognizer alloc] initWithEigenFaceRecognizer];
@@ -298,6 +310,56 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+/* websocket */
+
+-(void)webSocketDidClose:(WebSocket *)ws {
+    NSLog(@"Connection closed");
+}
+
+-(void)webSocket:(WebSocket *)ws didFailWithError:(NSError *)error {
+    if (error.code == WebSocketErrorConnectionFailed) {
+        NSLog(@"Connection failed");
+    } else if (error.code == WebSocketErrorHandshakeFailed) {
+        NSLog(@"Handshake failed");
+    } else {
+        NSLog(@"Error");
+    }
+}
+
+-(void)webSocket:(WebSocket *)ws didReceiveMessage:(NSString*)message {
+    //NSLog(@"Received: %@", message);
+    //NSLog(@"ws packet received");
+    
+    /*
+     // Convert json base64 message to image
+     NSDictionary *result = [message JSONValue];
+     NSDictionary *base64body = [result objectForKey:@"body"];
+     NSString *base64un = [base64body objectForKey:@"base64ImageDataUrl"];
+     NSString *base64img = [base64un stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+     
+     NSLog(@"Received json: %@", base64img);
+     /////////
+     //NSString *base64img =@"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==";
+     
+     NSURL *url = [NSURL URLWithString:base64img];
+     NSData *imageData = [NSData dataWithContentsOfURL:url];
+     UIImage *ret = [UIImage imageWithData:imageData];
+     self.view.image=ret;
+     */
+    
+}
+
+-(void)webSocketDidOpen:(WebSocket *)ws {
+    NSLog(@"Connected");
+    
+    // test red dot
+    //[ws send:@"{\"base64ImageDataUrl\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==\"}"];
+}
+
+-(void)webSocketDidSendMessage:(WebSocket *)ws {
+    //NSLog(@"Did send message");
 }
 
 @end

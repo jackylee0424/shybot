@@ -73,7 +73,7 @@
     
     sqlite3_finalize(statement);
     
-    return sqlite3_last_insert_rowid(_db);
+    return (int)sqlite3_last_insert_rowid(_db);
 }
 
 - (NSMutableArray *)getAllPeople
