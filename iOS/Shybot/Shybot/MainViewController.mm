@@ -45,14 +45,13 @@
     if (self.frameNum == CAPTURE_FPS) {
         dispatch_sync(dispatch_get_main_queue(), ^{
             [self parseFaces:[self.faceDetector facesFromImage:image] forImage:image];
+            
+            // also re-connect every sec
             if (![self.webSocket connected]) {
                 [self checkWSConnection];
             }
         });
         self.frameNum = 0;
-        
-        // also check connection every sec
-        
     }
     
     // face interaction (reaction to drive motors, running in every frame)
@@ -290,6 +289,9 @@
     
     self.faceDetector = [[FaceDetector alloc] init];
     self.faceRecognizer = [[CustomFaceRecognizer alloc] initWithEigenFaceRecognizer];
+    
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    uuid = [defaults objectForKey:@"uuid"];
     
     NSLog(@"all people: %@",[self.faceRecognizer getAllPeople]);
     

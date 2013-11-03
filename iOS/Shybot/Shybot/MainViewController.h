@@ -24,6 +24,7 @@ using namespace cv;
                                                 >
 {
     NSMutableDictionary * personality;
+    NSString * uuid;
     
     // websocket
     BOOL ws_connected;

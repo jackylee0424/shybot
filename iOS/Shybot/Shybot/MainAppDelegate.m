@@ -10,9 +10,26 @@
 
 @implementation MainAppDelegate
 
+- (void) initUUID{
+    // init device id
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"uuid"] == nil) {
+        NSString *uuidString = nil;
+        CFUUIDRef uuid = CFUUIDCreate(NULL);
+        if (uuid) {
+            uuidString = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL, uuid));
+        }
+        [defaults setObject:uuidString forKey:@"uuid"];
+        [defaults synchronize];
+    }
+    NSLog(@"uuid: %@",[defaults objectForKey:@"uuid"]);
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    [self initUUID];
     
     // prevent it go to sleep
    [UIApplication sharedApplication].idleTimerDisabled = YES;
