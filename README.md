@@ -15,7 +15,7 @@ originated from the Autism Theory and Technology class
 
 <img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_07a.jpg" height=240 />
 <img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_07b.jpg" height=240 />
-<img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_07c.jpg" height=210 />
+
 
 
 Roadmap
@@ -35,9 +35,13 @@ We'll start exploring using [OpenEars](http://www.politepix.com/openears/).
 
 Citation
 ======
+
+<img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_07c.jpg" height=210 />
+
 Lee, C.H., Kim, K., Breazeal, C., Picard, R.W. Shybot: Friend-Stranger Interaction for Children Living with Autism, _Work-In-Progress in the Extended Abstract of Computer-Human Interaction 2008_, April 5-10, 2008, Florence, Italy
 
 [Download full-text PDF](https://github.com/jackylee0424/shybot/blob/master/reference/chi08_shybot-lee.pdf?raw=true)
+
 
 
 Notes
