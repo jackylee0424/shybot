@@ -20,9 +20,15 @@ using namespace cv;
 
 @interface MainViewController : UIViewController<   RMCoreDelegate,
                                                     CvVideoCameraDelegate,
-                                                    WebSocketDelegate   >
+                                                    WebSocketDelegate
+                                                >
 {
     NSMutableDictionary * personality;
+    
+    // websocket
+    BOOL ws_connected;
+    BOOL ws_failed;
+    BOOL ws_connecting;
 }
 
 // motor / LED control

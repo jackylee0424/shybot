@@ -45,8 +45,14 @@
     if (self.frameNum == CAPTURE_FPS) {
         dispatch_sync(dispatch_get_main_queue(), ^{
             [self parseFaces:[self.faceDetector facesFromImage:image] forImage:image];
+            if (![self.webSocket connected]) {
+                [self checkWSConnection];
+            }
         });
         self.frameNum = 0;
+        
+        // also check connection every sec
+        
     }
     
     // face interaction (reaction to drive motors, running in every frame)
@@ -316,11 +322,16 @@
 
 -(void)webSocketDidClose:(WebSocket *)ws {
     NSLog(@"Connection closed");
+    ws_connected = false;
+    ws_failed = true;
+    ws_connecting=false;
 }
 
 -(void)webSocket:(WebSocket *)ws didFailWithError:(NSError *)error {
     if (error.code == WebSocketErrorConnectionFailed) {
         NSLog(@"Connection failed");
+        ws_failed=true;
+        ws_connecting=false;
     } else if (error.code == WebSocketErrorHandshakeFailed) {
         NSLog(@"Handshake failed");
     } else {
@@ -353,6 +364,9 @@
 
 -(void)webSocketDidOpen:(WebSocket *)ws {
     NSLog(@"Connected");
+    ws_connected=true;
+    ws_failed=false;
+    ws_connecting=false;
     
     // test red dot
     //[ws send:@"{\"base64ImageDataUrl\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==\"}"];
@@ -361,5 +375,32 @@
 -(void)webSocketDidSendMessage:(WebSocket *)ws {
     //NSLog(@"Did send message");
 }
+
+-(void)reConnectWS:(WebSocket *)ws{
+    [ws open];
+    NSLog(@"reconnecting again");
+    ws_connecting=true;
+}
+
+-(void)checkWSConnection{
+    
+    if (ws_connected&!ws_failed){
+        bool authorized = TRUE;
+        if (!authorized) {
+            NSLog(@"not authorized. bye!");
+        }else{
+            // ready to send data
+            NSLog(@"ws connected!!");
+        }
+    } else if (ws_failed&!ws_connecting){
+        
+        //auto reconnecting to server
+        [self reConnectWS:self.webSocket];
+        
+    } else {
+        NSLog(@"wait for server response.");
+    }
+}
+
 
 @end
