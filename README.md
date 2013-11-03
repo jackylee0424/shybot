@@ -28,7 +28,7 @@ or [SparkFun robotic car](https://www.sparkfun.com/products/10825)).
 We will start from implementing its emotion-familiarity model using face recognition techniques on an iPod touch 4th.
 This repository contains Shybot's work-in-progress prototype code based on Romo. 
 - _Companion_. For making it work as a consumer toy, we'll need durable design and robust sensors for basic safety concerns.
-- _Parents_. Shybot could help collect spoken words from kids (inspired by [Deb Roy's research](http://dkroy.media.mit.edu/publications/)).
+- _Parents_. Shybot could help collect spoken words from kids (inspired by [Deb Roy](http://www.ted.com/talks/deb_roy_the_birth_of_a_word.html "Deb's Ted Talk")'s [research](http://dkroy.media.mit.edu/publications/)).
 We'll start exploring using [OpenEars](http://www.politepix.com/openears/).
 
 
