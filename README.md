@@ -15,7 +15,7 @@ originated from the Autism Theory and Technology class
 
 <img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_07a.jpg" height=240 />
 <img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_07b.jpg" height=240 />
-<img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_07c.jpg" height=240 />
+<img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_07c.jpg" height=210 />
 
 
 Roadmap
