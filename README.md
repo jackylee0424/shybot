@@ -17,12 +17,14 @@ originated from the Autism Theory and Technology class
 <img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_07b.jpg" height=240 />
 
 
-Current Development
+Roadmap
 ======
 The plan is to re-build it using some existing platform (e.g., [Romo](http://romotive.com/ "iPhone/iPod extension toy car")
 or [SparkFun robotic car](https://www.sparkfun.com/products/10825)). 
-The key is to implement its emotion-familiarity model using face recognition techniques on iPod touch 4th(!). 
-This repository contains Shybot's work-in-progress prototype code based on Romo. Proximity sensors and industrial design will be added soon.
+We will start from implementing its emotion-familiarity model using face recognition techniques on an iPod touch 4th.
+This repository contains Shybot's work-in-progress prototype code based on Romo. 
+For making it work as a consumer toy, we'll need durable design and robust sensors for basic safety concerns.
+For parents, Shybot could help collect spoken words from kids (inspired by [Deb Roy's research](http://dkroy.media.mit.edu/publications/)).
 
 <img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_13a.png" height=200 />
 <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Kou-Kou_by_Georgios_Iakovidis.jpg/200px-Kou-Kou_by_Georgios_Iakovidis.jpg" height=200 />
