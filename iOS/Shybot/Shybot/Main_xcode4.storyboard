@@ -17,6 +17,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="144" height="212"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Eox-xK-24o">
+                                <rect key="frame" x="0.0" y="220" width="144" height="212"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="njS-x2-D4h">
                                 <rect key="frame" x="181" y="112" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -34,6 +38,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="cvcameraview" destination="uAY-Lx-wfg" id="JKf-SC-JcA"/>
+                        <outlet property="cvmotionview" destination="Eox-xK-24o" id="Phh-dW-WI3"/>
                         <outlet property="cvroiview" destination="njS-x2-D4h" id="web-Bb-5II"/>
                         <outlet property="debug_status" destination="2bM-tQ-1pa" id="WU4-ZV-Ue8"/>
                     </connections>

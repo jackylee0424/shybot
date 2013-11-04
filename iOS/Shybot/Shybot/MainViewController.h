@@ -30,6 +30,9 @@ using namespace cv;
     BOOL ws_connected;
     BOOL ws_failed;
     BOOL ws_connecting;
+    
+    // motion detection
+    
 }
 
 // motor / LED control
@@ -39,6 +42,7 @@ using namespace cv;
 @property (nonatomic, strong) CvVideoCamera* videoCamera;
 @property (nonatomic, strong) IBOutlet UIImageView * cvcameraview;
 @property (nonatomic, strong) IBOutlet UIImageView * cvroiview;
+@property (nonatomic, strong) IBOutlet UIImageView * cvmotionview;
 @property (nonatomic, strong) FaceDetector *faceDetector;
 @property (nonatomic, strong) CustomFaceRecognizer *faceRecognizer;
 @property (nonatomic, strong) CALayer *featureLayer;
