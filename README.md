@@ -47,3 +47,8 @@ Notes
 - All codes are under MIT license.
 - For Romo developers, to smoothly run it in debug mode, iPhone/iPod needs to be docked (on Romo) "before" connecting the charging wire to your Mac. "After" connected, Romo will try connecting its app, so click "ignore" then open Shybot app.
 
+
+Contribute
+======
+This hasn't gotten to first master yet. 
+However, we'll be following [A successful Git branching model](http://nvie.com/posts/a-successful-git-branching-model/).
