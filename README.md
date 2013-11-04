@@ -1,6 +1,8 @@
 Origin
 ======
 
+<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Kou-Kou_by_Georgios_Iakovidis.jpg/200px-Kou-Kou_by_Georgios_Iakovidis.jpg" height=200 />
+
 Can a [robot](http://www.youtube.com/watch?v=3PMlDidyG_I "StarTrek: Measure of a Man") _like or dislike_ a person? How can a robot build a relationship with its _friends_? 
 Shybot is here to explore these questions.
 Shybot is an emotion-driven robot like a shy creature which recognizes friends or strangers and 
@@ -20,9 +22,8 @@ originated from the Autism Theory and Technology class
 
 Roadmap
 ======
-
+<img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_v1.png" height=200 />
 <img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_13a.png" height=200 />
-<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Kou-Kou_by_Georgios_Iakovidis.jpg/200px-Kou-Kou_by_Georgios_Iakovidis.jpg" height=200 />
 
 - _Resurrection_. The plan is to re-build it using some existing platform (e.g., [Romo](http://romotive.com/ "iPhone/iPod extension toy car")
 or [SparkFun robotic car](https://www.sparkfun.com/products/10825)). 
