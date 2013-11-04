@@ -54,5 +54,5 @@ Notes
 
 Contribute
 ======
-This hasn't gotten to first master yet. 
-However, we'll be following [A successful Git branching model](http://nvie.com/posts/a-successful-git-branching-model/).
+This hasn't reached first stable master yet. 
+However, we'll be following [a successful git branching model](http://nvie.com/posts/a-successful-git-branching-model/).
