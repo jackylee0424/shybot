@@ -15,15 +15,15 @@ originated from the Autism Theory and Technology class
 
 [Short video from '07 (.m4v)](https://github.com/jackylee0424/shybot/blob/master/doc/shybot_07short.m4v?raw=true)
 
-<img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_07a.jpg" height=240 />
-<img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_07b.jpg" height=240 />
+<img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_07a.jpg" height=160 />
+<img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_07b.jpg" height=160 />
 
 
 
 Roadmap
 ======
-<img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_v1.png" height=200 />
-<img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_13a.png" height=200 />
+<img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_v1.png" height=160 />
+<img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_13a.png" height=160 />
 
 - _Resurrection_. The plan is to re-build it using some existing platform (e.g., [Romo](http://romotive.com/ "iPhone/iPod extension toy car")
 or [SparkFun robotic car](https://www.sparkfun.com/products/10825)). 
@@ -41,7 +41,7 @@ Lee, C.H., Kim, K., Breazeal, C., Picard, R.W. Shybot: Friend-Stranger Interacti
 
 [Download full-text PDF](https://github.com/jackylee0424/shybot/blob/master/reference/chi08_shybot-lee.pdf?raw=true)
 
-<img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_07c.jpg" height=210 />
+<img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_07c.jpg" height=160 />
 
 Notes
 ======
