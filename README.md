@@ -11,7 +11,7 @@ originated from the Autism Theory and Technology class
 (co-taught by [Rosalind Picard](http://www.bbc.co.uk/news/technology-24652902?SThisFB), 
 [Cynthia Breazeal](http://www.ted.com/talks/cynthia_breazeal_the_rise_of_personal_robots.html), and 
 [Sherry Turkle](http://www.youtube.com/watch?v=Ikn-_myAfhQ)) at MIT Media Lab in 2007. 
-Many of Shybot's features are inspired from [_The Uncanny_](https://github.com/jackylee0424/shybot.wiki.git "by Sigmund Freud (1919)")
+Many of Shybot's features are inspired from [_The Uncanny_](https://github.com/jackylee0424/shybot/wiki/Uncanny "by Sigmund Freud (1919)").
 
 [Short video from '07 (.m4v)](https://github.com/jackylee0424/shybot/blob/master/doc/shybot_07short.m4v?raw=true)
 
