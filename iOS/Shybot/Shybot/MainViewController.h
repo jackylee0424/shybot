@@ -20,8 +20,7 @@ using namespace cv;
 
 @interface MainViewController : UIViewController<   RMCoreDelegate,
                                                     CvVideoCameraDelegate,
-                                                    WebSocketDelegate
-                                                >
+                                                    WebSocketDelegate >
 {
     NSMutableDictionary * personality;
     NSString * uuid;
@@ -32,7 +31,12 @@ using namespace cv;
     BOOL ws_connecting;
     
     // motion detection
+    BOOL motion_init;
+    cv::Mat prev_frame, curr_frame, next_frame;
+    int env_learn;
     
+    //face recog
+    int total_known_faces;
 }
 
 // motor / LED control

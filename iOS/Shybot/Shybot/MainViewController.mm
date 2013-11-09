@@ -25,16 +25,35 @@
 {
     // environment condition
     /*
-    do something to setup a good learning atmosphere
-    */
-    //self.isLearning = FALSE;
+     do something to setup a good learning atmosphere
+     */
+    if (!motion_init) {
+        NSLog(@"%d x %d", image.cols ,image.rows);
+
+        image.copyTo(prev_frame);
+        motion_init = TRUE;
+    }
     
+    cv::absdiff(prev_frame, image, curr_frame);
+    
+    float env_now = cv::mean(curr_frame)[0];
+   
+    if (env_now < env_learn) {
+        
+        self.isLearning = TRUE;
+        //NSLog(@"env motion: %f", env_now);
+    
+    }else{
+        self.isLearning = FALSE;
+    }
+    
+
     // send video frames to remote server
     if ([self.webSocket connected]){
         // need to dispatch to main thread for sending ws packets
         dispatch_sync(dispatch_get_main_queue(), ^{
             //NSLog(@"ws connected. try sending packets");
-            NSData * imageData = UIImageJPEGRepresentation([OpenCVData UIImageFromMat:image],.5);
+            NSData * imageData = UIImageJPEGRepresentation([OpenCVData UIImageFromMat:curr_frame],.5);
             NSString * img64str = [imageData base64Encoding];
             [self.webSocket send:[NSString stringWithFormat:@"{\"base64ImageDataUrl\":\"data:image/jpeg;charset=utf-8;base64,%@\"}",img64str]];
         });
@@ -112,6 +131,9 @@
         });
          
     }
+    
+    /// put current image into history
+    image.copyTo(prev_frame);
 }
 
 - (bool)learnFace:(const std::vector<cv::Rect> &)faces forImage:(cv::Mat&)image personID:(int)pid
@@ -123,7 +145,7 @@
     
     cv::Rect face = faces[0];
     [self.faceRecognizer learnFace:face ofPersonID:pid fromImage:image]; // need to find a way to make new IDs
-    NSLog(@"learn a face");
+    NSLog(@"learnt a new face");
     
     return YES;
 }
@@ -139,11 +161,12 @@
     //CGColor *highlightColor = [[UIColor redColor] CGColor];
     
     if (self.modelAvailable) {
+        
         NSDictionary *match = [self.faceRecognizer recognizeFace:face inImage:image];
         
         if ([match objectForKey:@"personID"] != [NSNumber numberWithInt:-1]) {
             
-            NSLog(@"%@: %.2f", [match objectForKey:@"personName"], [[match objectForKey:@"confidence"]floatValue]);
+            NSLog(@"matching %@: %.2f", [match objectForKey:@"personName"], [[match objectForKey:@"confidence"]floatValue]);
             
             // confidence < thresold
             if ([[match objectForKey:@"confidence"]floatValue]<2400){
@@ -152,29 +175,30 @@
             }else{
                 // low confidence
                 NSLog(@"low confidence face recog");
-                [self learnFace:faces forImage:image personID:10];
+                
+                //[self learnFace:faces forImage:image personID:10];
             }
             
         }else{
             
             // no match
             NSLog(@"no match. learn this new face.");
-            [self learnFace:faces forImage:image personID:10];
+            total_known_faces++;
+            [self learnFace:faces forImage:image personID:total_known_faces];
         }
     
     }else{
-        
+        NSLog(@"no face model saved");
         
         // no model, need to build one
         // need some alone time to build the model
         
-        NSLog(@"stranger face found, start learning?");
-        
         if (self.isLearning) {
+            NSLog(@"gentle stranger face found, start learning...");
             
             if (self.newfaceNumbers<1)
             {
-                self.currentTarget = [self.faceRecognizer newPersonWithName:[NSString stringWithFormat:@"human%d",0]];
+                self.currentTarget = [self.faceRecognizer newPersonWithName:[NSString stringWithFormat:@"human%d",total_known_faces]];
             }
             else
             {
@@ -183,16 +207,12 @@
                 }else{
                     // save 10 images then build a model
                     self.modelAvailable = [self.faceRecognizer trainModel];
+                    self.newfaceNumbers = 0;
                 }
             }
             
             self.newfaceNumbers++;
         }
-        
-        
-        
-        
-        
         
     }
 
@@ -230,7 +250,6 @@
     // init Romo
     if (robot.isDrivable && robot.isHeadTiltable && robot.isLEDEquipped) {
         self.robot = (RMCoreRobot<DriveProtocol, LEDProtocol> *) robot;
-    
         NSLog(@"Romo dock connected!");
         [self.robot.LEDs pulseWithPeriod:5.0 direction:RMCoreLEDPulseDirectionUpAndDown];
     }
@@ -284,11 +303,11 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    self.webSocket = [[WebSocket alloc] initWithURLString:@"ws://192.168.1.121:8765/wsb" delegate:self];
+    self.webSocket = [[WebSocket alloc] initWithURLString:@"wss://app.shybot.org:443/wsb" delegate:self];
     [self.webSocket open];
     
-    self.faceDetector = [[FaceDetector alloc] init];
-    self.faceRecognizer = [[CustomFaceRecognizer alloc] initWithEigenFaceRecognizer];
+    self.faceDetector = [[FaceDetector alloc] init]; // use every frame
+    self.faceRecognizer = [[CustomFaceRecognizer alloc] initWithEigenFaceRecognizer]; //use ever second
     
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     uuid = [defaults objectForKey:@"uuid"];
@@ -307,11 +326,17 @@
     
     [RMCore setDelegate:self];
 
-    self.dnumoffaces = 0;
+    
     [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(check_environment) userInfo:nil repeats:YES];
     
+    self.dnumoffaces = 0; // reset numbers of faces
     self.newfaceNumbers = 0; // reset learning at start
+    motion_init = FALSE;
     
+    // learning thresold for env noise
+    env_learn = 30;
+    
+    total_known_faces = [[self.faceRecognizer getAllPeople] count];
 }
 
 - (void)didReceiveMemoryWarning
