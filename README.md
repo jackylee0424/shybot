@@ -25,11 +25,16 @@ Roadmap
 ======
 
 
-- _Resurrection_. The plan is to re-build it using some existing platform (e.g., [Romo](http://romotive.com/ "iPhone/iPod extension toy car")
+- _Resurrection_. The plan is to re-build it using some existing platform 
+(e.g., [Romo](http://romotive.com/ "iPhone/iPod extension toy car")
 or [SparkFun robotic car](https://www.sparkfun.com/products/10825)). 
 We will start from implementing its emotion-familiarity model using face recognition techniques on an iPod touch 4th.
 This repository contains Shybot's work-in-progress prototype code based on Romo. 
-- _Companion_. For making it work as a consumer toy, we'll need durable design and robust sensors for basic safety concerns.
+- _Companion_. For making it work as a consumer toy, 
+we'll need durable design and robust sensors for basic safety concerns. 
+Adding human detector using non-contact temperature sensors 
+([MLX90614](https://www.sparkfun.com/products/9570) 
+or [MLX90620](http://www.melexis.com/Infrared-Thermometer-Sensors/Infrared-Thermometer-Sensors/MLX90620-776.aspx))
 - _Parents_. Shybot could help collect spoken words from kids (inspired by [Deb Roy](http://www.ted.com/talks/deb_roy_the_birth_of_a_word.html "Deb's Ted Talk")'s [research](http://dkroy.media.mit.edu/publications/)).
 We'll start exploring using [OpenEars](http://www.politepix.com/openears/).
 
