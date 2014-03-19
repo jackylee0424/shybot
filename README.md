@@ -2,10 +2,12 @@ Origin
 ======
 
 
-Can a [robot](http://www.youtube.com/watch?v=3PMlDidyG_I "StarTrek: Measure of a Man") _like or dislike_ a person? How can a robot build a relationship with its _friends_? 
+Can a [robot](http://www.youtube.com/watch?v=3PMlDidyG_I "StarTrek: Measure of a Man") _like or dislike_ a person? How can a robot build a relationship with its _friends_? Can a robot think based on its relationship with human? Can a robot learn in an irreversible manner?
 Shybot is here to explore these questions.
 Shybot is an emotion-driven robot like a shy creature which recognizes friends or strangers and 
-interacts with them differently. Shybot was a 
+interacts with them differently. 
+
+Shybot was a 
 [research project](http://affect.media.mit.edu/projects.php?id=2306 "Affective Computing Group") 
 originated from the Autism Theory and Technology class 
 (co-taught by [Rosalind Picard](http://www.bbc.co.uk/news/technology-24652902?SThisFB), 
@@ -24,12 +26,11 @@ Many of Shybot's features are inspired by [_The Uncanny_](https://github.com/jac
 Roadmap
 ======
 
-
+- _peer-to-peer face learning_. It would be more efficient to accumulate the "learning" part so that this network of Shybots could keep improving themselves.
 - _Resurrection_. The plan is to re-build it using some existing platform 
 (e.g., [Romo](http://romotive.com/ "iPhone/iPod extension toy car")
 or [SparkFun robotic car](https://www.sparkfun.com/products/10825)). 
-We will start from implementing its emotion-familiarity model using face recognition techniques on an iPod touch 4th.
-This repository contains Shybot's work-in-progress prototype code based on Romo. 
+This repository contains Shybot's work-in-progress prototype code based on Romo. This part was paused because the software part seemed more important.
 - _Companion_. For making it work as a consumer toy, 
 we'll need durable design and robust sensors for basic safety concerns. 
 Adding human detector (and danger detector) using non-contact temperature sensors 
