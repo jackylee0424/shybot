@@ -28,13 +28,12 @@ Roadmap
 
 - _Peer-to-peer face learning_. It would be more efficient to accumulate the "learning" part so that this network of Shybots could keep improving themselves.
 - _Companion_. The plan is to re-build it using some existing platform 
-(e.g., [Romo](http://romotive.com/ "iPhone/iPod extension toy car")
-or [SparkFun robotic car](https://www.sparkfun.com/products/10825)). 
+(e.g., [Romo](http://romotive.com/ "iPhone/iPod extension toy car"), [SparkFun robotic car](https://www.sparkfun.com/products/10825), or [Raspberry Pi](http://www.raspberrypi.org/) with camera, sensors, and motors). 
 This repository contains Shybot's work-in-progress prototype code based on Romo. For making it work as a consumer toy, 
 we'll need durable design and robust sensors for basic safety concerns. 
 Adding human detector (and danger detector) using non-contact temperature sensors 
 ([MLX90614](https://www.sparkfun.com/products/9570) 
-or [MLX90620](http://www.melexis.com/Infrared-Thermometer-Sensors/Infrared-Thermometer-Sensors/MLX90620-776.aspx)). This part was paused because the software part seemed more important. We are also considering building Shybot on [Raspberry Pi](http://www.raspberrypi.org/) with camera, sensors, and motors.
+or [MLX90620](http://www.melexis.com/Infrared-Thermometer-Sensors/Infrared-Thermometer-Sensors/MLX90620-776.aspx)). This part was paused because the software part seemed more important.
 - _Parents_. Shybot could help collect spoken words from kids (inspired by [Deb Roy](http://www.ted.com/talks/deb_roy_the_birth_of_a_word.html "Deb's Ted Talk")'s [research](http://dkroy.media.mit.edu/publications/)).
 
 
