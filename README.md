@@ -5,7 +5,14 @@ Origin
 Can a [robot](http://www.youtube.com/watch?v=3PMlDidyG_I "StarTrek: Measure of a Man") _like or dislike_ a person? How can a robot build a relationship with its _friends_? Can a robot think based on its relationship with human? Can a robot learn in an irreversible manner?
 Shybot is here to explore these questions.
 Shybot is an emotion-driven robot like a shy creature which recognizes friends or strangers and 
-interacts with them differently. We envision the Shybot project can be further developed into the "CPU" for emotion robotics.
+interacts with them differently. We envision the Shybot project can be further developed into the "CPU" for emotion robotics. According to Asimov's foundamental assumptions for robots, we believe the robotics design has to intricically coupled with human-machine interaction.
+
+
+[Asimov's Three Laws](http://en.wikipedia.org/wiki/Three_Laws_of_Robotics)
+1. __A robot may not injure a human being__ or, through inaction, allow a human being to come to harm.
+2. __A robot must obey the orders__ given to it by human beings, except where such orders would conflict with the First Law.
+3. __A robot must protect its own existence__ as long as such protection does not conflict with the First or Second Law.
+
 
 Shybot was initiated as a 
 [research project](http://affect.media.mit.edu/projects.php?id=2306 "Affective Computing Group") 
@@ -33,8 +40,7 @@ This repository contains Shybot's work-in-progress prototype code based on Romo.
 we'll need durable design and robust sensors for basic safety concerns. 
 Adding human detector (and danger detector) using non-contact temperature sensors 
 ([MLX90614](https://www.sparkfun.com/products/9570) 
-or [MLX90620](http://www.melexis.com/Infrared-Thermometer-Sensors/Infrared-Thermometer-Sensors/MLX90620-776.aspx)). This part was paused because the software part seemed more important.
-- _Parents_. Shybot could help collect spoken words from kids (inspired by [Deb Roy](http://www.ted.com/talks/deb_roy_the_birth_of_a_word.html "Deb's Ted Talk")'s [research](http://dkroy.media.mit.edu/publications/)).
+or [MLX90620](http://www.melexis.com/Infrared-Thermometer-Sensors/Infrared-Thermometer-Sensors/MLX90620-776.aspx)). __This part was paused because it's also too much fun to build its physical part. We'd like to focus on the software now__.
 
 
 <img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_v1.png" height=160 />
