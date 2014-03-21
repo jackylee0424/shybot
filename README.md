@@ -5,7 +5,7 @@ Origin
 Can a [robot](http://www.youtube.com/watch?v=3PMlDidyG_I "StarTrek: Measure of a Man") _like or dislike_ a person? How can a robot build a relationship with its _friends_? Can a robot think based on its relationship with human? Can a robot learn in an irreversible manner?
 Shybot is here to explore these questions.
 Shybot is an emotion-driven robot like a shy creature which recognizes friends or strangers and 
-interacts with them differently. We envision the Shybot project can be further developed into the "CPU" for emotion robotics. According to Asimov's foundamental assumptions for robots, we believe the robotics design has to intricically coupled with human-machine interaction.
+interacts with them differently. We envision the Shybot project can be further developed into the "CPU" for emotion robotics. According to Asimov's foundamental assumptions for robots, we believe the robotics design has to be intricically coupled with human-machine interaction.
 
 
 [Asimov's Three Laws](http://en.wikipedia.org/wiki/Three_Laws_of_Robotics)
