@@ -43,8 +43,8 @@ Adding human detector (and danger detector) using non-contact temperature sensor
 or [MLX90620](http://www.melexis.com/Infrared-Thermometer-Sensors/Infrared-Thermometer-Sensors/MLX90620-776.aspx)). __This part was paused because it's also too much fun to build its physical part. We'd like to focus on the software now__.
 
 
-<img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_v1.png" height=160 />
-<img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_13a.png" height=160 />
+  <img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_v1.png" height=160 />
+  <img src="https://raw.github.com/jackylee0424/shybot/master/doc/shybot_13a.png" height=160 />
 
 
 Citation
