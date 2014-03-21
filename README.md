@@ -9,9 +9,9 @@ interacts with them differently. We envision the Shybot project can be further d
 
 
 [Asimov's Three Laws](http://en.wikipedia.org/wiki/Three_Laws_of_Robotics)
-1. __A robot may not injure a human being__ or, through inaction, allow a human being to come to harm.
-2. __A robot must obey the orders__ given to it by human beings, except where such orders would conflict with the First Law.
-3. __A robot must protect its own existence__ as long as such protection does not conflict with the First or Second Law.
+  1. __A robot may not injure a human being__ or, through inaction, allow a human being to come to harm.
+  2. __A robot must obey the orders__ given to it by human beings, except where such orders would conflict with the First Law.
+  3. __A robot must protect its own existence__ as long as such protection does not conflict with the First or Second Law.
 
 
 Shybot was initiated as a 
