@@ -1,3 +1,7 @@
+#
+# change this file to config.py
+#
+
 import landerdb
 import socket
 import random
