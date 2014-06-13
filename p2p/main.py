@@ -31,6 +31,10 @@ from sklearn.decomposition import PCA
 import peer
 import thread
 import cPickle
+import logging
+
+logging.basicConfig(format='[%(asctime)s] %(name)s %(levelname)s %(message)s', level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 total_images = 0
 
@@ -135,7 +139,7 @@ def read_cvimages2dict(path):
                             data=preprocessimg(fullpath).tolist(),
                             label=filelabel, ts=ts)
                 except:
-                    print "Unexpected error:", sys.exc_info()[0]
+                    logging.error("Unexpected error: %s", sys.exc_info()[0])
                     raise
     return data_dict
 
@@ -172,7 +176,6 @@ def predictX(
         if data_dict[i]["label"] in labels:
             cos_dist = data_dict[i][dist_type]
             if cos_dist < min_dist:
-                #print "min: %f (%s)" % (cos_dist, labels[data_dict[i]["label"]])
                 matched_label = data_dict[i]["label"]
                 if labels[data_dict[i]["label"]] not in output:
                     output[labels[data_dict[i]["label"]]] = cos_dist
@@ -191,7 +194,7 @@ def predictX(
 
 class WSocketHandler(tornado.websocket.WebSocketHandler):
     def open(self):
-        print "ws opened"
+        logging.debug("ws opened")
         self.dir_name = "%.0f" % (time.time() * 1000.0)
         self.mode = 0
         self.data_loaded = False
@@ -207,7 +210,7 @@ class WSocketHandler(tornado.websocket.WebSocketHandler):
             with open(join('data', 'labels.bin'), 'rb') as input:
                 self.labeldict = pickle.load(input)
         else:
-            print "no label file found"
+            logging.debug("no label file found")
             # create a new data file
             with open(join('data', 'labels.bin'), 'wb') as output:
                 pickle.dump(self.labeldict, output, pickle.HIGHEST_PROTOCOL)
@@ -215,7 +218,7 @@ class WSocketHandler(tornado.websocket.WebSocketHandler):
         self.pca_m = pca_m
         if self.pca_m:
             self.data_loaded = True
-            print "pca model loaded"
+            logging.debug("pca model loaded")
         else:
             self.data_loaded = False
     
@@ -247,15 +250,15 @@ class WSocketHandler(tornado.websocket.WebSocketHandler):
         fullpath = join("data", "raw", self.dir_name, fname + ".png")
         with open(fullpath, "wb") as f:
             f.write(img)
-            print "saved to %s.png" % fname
+            logging.debug("saved to %s.png", fname)
                                
         if (self.mode > 0) and (self.data_loaded):
-            print "Detect mode"
+            logging.debug("Detect mode")
             self.detect_face(preprocessimg(fullpath))
         else:
-            print "Training mode"
+            logging.debug("Training mode")
             self.labeldict[self.dir_name] = parsed["label"]
-            print "Labels- %s" % (self.labeldict[self.dir_name])
+            logging.debug("Labels- %s", (self.labeldict[self.dir_name]))
 
     def on_close(self):
         #global total_images
@@ -321,11 +324,10 @@ class IndexPageHandler(tornado.web.RequestHandler):
             with open(join('data', 'labels.bin'), 'rb') as input:
                 self.labeldict = pickle.load(input)
         else:
-            print "no label file found"
+            logging.debug("no label file found")
             # create a new data file
             with open(join('data', 'labels.bin'), 'wb') as output:
                 pickle.dump(self.labeldict, output, pickle.HIGHEST_PROTOCOL)
-            #print self.labeldict
 
         self.write('''
         <html><head>
@@ -344,7 +346,6 @@ class IndexPageHandler(tornado.web.RequestHandler):
             "total enrolled IDs: %d <br><br>" % len(
                 set([i for i in self.labeldict.values()])))
         for i in pn.allnodes:
-            print type(i)
             self.write(i["node_label"] + "<br>")
         if total_images > 0:
             self.write("<p><a href='/login'>login</a></p>")
@@ -436,10 +437,10 @@ def initPCA():
         with open('block.blk', 'rb') as f:
             block = cPickle.load(f)
     
-    print "data/block", len(data_dict), "/", len(block)
+    logging.info("data/block %d/%d", len(data_dict), len(block))
     
     if not any(data_dict):
-        print "no data"
+        logging.debug("no data")
     else:
         X = []
         z = set()
@@ -449,13 +450,13 @@ def initPCA():
         #y = len(X)
         X = np.vstack(X)
 
-        print "total faces:", X.shape[0]
-        print "total pixels per face:", X.shape[1]
-        print "total labels:", len(z)
+        logging.info("total faces: %d", X.shape[0])
+        logging.info("total pixels per face: %d", X.shape[1])
+        logging.info("total labels: %d", len(z))
         total_images = X.shape[0]
         # PCA
         k = len(z)
-        print "principal component no: ", k
+        logging.info("principal component no: %d", k)
         pca_m = PCA(n_components=k).fit(X)
 
         # build projection within data_dict
@@ -470,7 +471,7 @@ def initPCA():
     # save it
     with open('block.blk', 'wb') as f:
         cPickle.dump(block, f)
-        print "block", len(block)
+        logging.info("block %d", len(block))
 
     pn.data_dict = data_dict
 
@@ -482,13 +483,11 @@ def main():
     if not check:
         pn.updateNodes()
     if peer.config.relay:
-        print "pNode started as a relay node."
+        logging.debug("pNode started as a relay node.")
         thread.start_new_thread(pn.normal, ())
         thread.start_new_thread(pn.relay, ())
-        #pn.relay()
     else:
-        print "pNode started as a normal node."
-        #pn.normal()
+        logging.debug("pNode started as a normal node.")
         thread.start_new_thread(pn.normal, ())
 
     if not os.path.exists("data"):
@@ -516,7 +515,7 @@ def main():
     ], **settings)
     http_server = tornado.httpserver.HTTPServer(application)
     http_server.listen(port)
-    print "server running at http://%s:%d/" % (ip, port)
+    logging.info("server running at http://%s:%d/", ip, port)
 
     #import webbrowser
     #webbrowser.get("open -a /Applications/Google\ Chrome.app %s").open(

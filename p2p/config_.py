@@ -16,7 +16,7 @@ except:
 
 
 label = "peer%d" % int(random.random()*100)
-sleep_time = 1
+sleep_time = 5
 
 # master node needs to be a relay
 relay = 1  # set this to zero to "not" relay to other nodes (aka leaf node).

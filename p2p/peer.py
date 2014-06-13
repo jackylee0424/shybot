@@ -27,6 +27,7 @@ import json
 import time
 import hashlib
 import cPickle
+import logging
 
 node_sleep_time = config.sleep_time
 node_label = config.label
@@ -61,7 +62,6 @@ def count_send():
         mine = 0
     else:
         mine = len(mine)
-    #print mine
     check = send_command({"cmd": "get_nodes_count"}, out=True)
     if not check:
         return
@@ -124,7 +124,6 @@ def register(obj, data):
         time.sleep(0.1)
     open("nodes.lock", 'w').close()
     allnodes = config.nodes.find("nodes", "all")
-    #print allnodes
     tmp = set()
     for i in allnodes:
         tmp.add(i['ip'] + ":" + str(i['port']))
@@ -160,7 +159,6 @@ def send_command(cmd, out=False, god=False):
             s.close()
             continue
         else:
-            #print "sending", cmd
             s.send(json.dumps(cmd))
             out = ""
             while True:
@@ -238,7 +236,6 @@ class Node:
                 ts=time.time())))
 
     def updateNodes(self):
-        #print "Getting nodes..."
         send_nodes(True)
         check = config.nodes.find("nodes", "all")
         self.allnodes = check
@@ -253,7 +250,6 @@ class Node:
                 "node_label": node_label,
             })
             config.nodes.save()
-        #print "updating nodes..."
         self.send_register()
 
     def relay(self):
@@ -272,7 +268,6 @@ class Node:
         if data:
             try:
                 data = json.loads(data)
-                #print "json", data
             except:
                 obj.close()
                 return
@@ -286,7 +281,7 @@ class Node:
     def normal(self):
         counter = 0
         if not config.relay:
-            print "send register"
+            logging.debug("send register")
             self.send_register()
         while True:
             count_send()
@@ -294,7 +289,7 @@ class Node:
             try:
                 sync_data = json.loads(send_command({"cmd": "sync"}))
             except:
-                print "error in receiving"
+                logging.error("error in receiving")
                 sync_data = dict()
 
             #print sync_data
@@ -316,28 +311,36 @@ class Node:
                     self.block[sync_data["hash"]] = sync_data
 
                     if any(self.data_dict.keys()):
-                        self.merkle_hash = merkle(sorted(self.data_dict.keys()))
+                        self.merkle_hash = merkle(
+                            sorted(self.data_dict.keys()))
 
                     # save it
                     with open('block.blk', 'wb') as f:
                         cPickle.dump(self.block, f)
-                        print "block", len(self.block), self.merkle_hash
+                        logging.info(
+                            "block %d %s",
+                            len(self.block), self.merkle_hash)
             # sleep
-            print "sleep for %d sec (%d)" % (node_sleep_time, counter)
+            logging.info("sleep for %d sec (%d)", node_sleep_time, counter)
             time.sleep(node_sleep_time)
             if counter % 5 == 0:
                 self.updateNodes()
             counter += 1
 
 if __name__ == "__main__":
+    logging.basicConfig(
+        format='[%(asctime)s] %(name)s %(levelname)s %(message)s',
+        level=logging.DEBUG)
+    logger = logging.getLogger(__name__)
+
     pn = Node()
     check = config.nodes.find("nodes", "all")
     if not check:
         pn.updateNodes()
     if config.relay:
-        print "pNode started as a relay node."
+        logging.info("pNode started as a relay node.")
         thread.start_new_thread(pn.normal, ())
         pn.relay()
     else:
-        print "pNode started as a normal node."
+        logging.info("pNode started as a normal node.")
         pn.normal()
