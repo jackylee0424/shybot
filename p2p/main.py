@@ -173,10 +173,10 @@ def predictX(
             data_dict[ky][projection_type], Q)
     output = dict()
     for i in sorted(data_dict, key=lambda x: (data_dict[x][dist_type], data_dict[x]['label']))[:num_of_mins]:
-
         if data_dict[i]["label"] in labels:
             cos_dist = data_dict[i][dist_type]
             if cos_dist < min_dist:
+                logging.debug("found min dist: %f (%s)", cos_dist, labels[data_dict[i]["label"]])
                 matched_label = data_dict[i]["label"]
                 if labels[data_dict[i]["label"]] not in output:
                     output[labels[data_dict[i]["label"]]] = cos_dist
@@ -340,8 +340,9 @@ class IndexPageHandler(tornado.web.RequestHandler):
         self.write("<br><h2>Shybot</h2>")
         self.write("<h4>emotion robot software</h4>")
         self.write(
-            "<i>powered by distributed data-driven people-robot interaction</i><br><br>")
-        self.write("total enrolled images: %d <br>" % total_images)
+            "<i>distributed data-driven people-robot interaction</i>")
+        self.write("<br><br>local enrolled images: %d <br>" % total_images)
+        self.write("total enrolled images: %d <br>" % len(local_data_dict))
         self.write("total enrolled labels: %d <br>" % len(self.labeldict))
         self.write(
             "total enrolled IDs: %d <br><br>" % len(
@@ -431,12 +432,16 @@ def initPCA():
 
     # read images, travese all folders again (not efficient)
     local_data_dict.update(read_cvimages2dict(join("data", "raw")))
+    logging.info("local data %d", len(local_data_dict))
 
     # check block
     block = dict()
     if os.path.exists("block.blk"):
         with open('block.blk', 'rb') as f:
             block = cPickle.load(f)
+
+    # load saved block data
+    local_data_dict.update(block)
 
     logging.info("data/block %d/%d", len(local_data_dict), len(block))
 
@@ -463,11 +468,11 @@ def initPCA():
         # build projection within data_dict
         for ky in local_data_dict.keys():
             if "proj_pca" not in local_data_dict[ky]:
-                local_data_dict[ky]["proj_pca"] = pca_m.transform(np.array(local_data_dict[ky]["data"]).reshape(1, -1))
+                local_data_dict[ky]["proj_pca"] = pca_m.transform(
+                    np.array(local_data_dict[ky]["data"]).reshape(1, -1))
 
     # update block and dict
     block.update(local_data_dict)
-    local_data_dict.update(block)
 
     # save it
     with open('block.blk', 'wb') as f:

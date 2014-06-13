@@ -1,7 +1,7 @@
 
 '''
 to-do:
-- whiteboarding p2p mechanism
+- check shared labels
 - batch create testing nodes
 - verify/visualize batch nodes
 - turn block into blockchain with Merkle hash
@@ -321,7 +321,7 @@ class Node:
                             "block %d %s",
                             len(self.block), self.merkle_hash)
             # sleep
-            logging.info("sleep for %d sec (%d)", node_sleep_time, counter)
+            logging.info("sleep for %d sec", node_sleep_time)
             time.sleep(node_sleep_time)
             if counter % 5 == 0:
                 self.updateNodes()
