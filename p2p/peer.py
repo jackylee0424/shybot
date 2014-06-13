@@ -1,14 +1,14 @@
 
-'''
-to-do:
-- batch create testing nodes
-- verify/visualize batch nodes
-- turn block into blockchain with Merkle hash
 
-credit:
-zcoin, https://github.com/Max00355/zCoin
-merkle, http://www.righto.com/2014/02/bitcoin-mining-hard-way-algorithms.html
-'''
+## TODO
+# 1. batch create testing nodes
+# 2. verify/visualize batch nodes
+# 3. turn block into blockchain with Merkle hash
+
+# credit:
+# zcoin, https://github.com/Max00355/zCoin
+# merkle, http://www.righto.com/2014/02/bitcoin-mining-hard-way-algorithms.html
+
 
 import os
 # for beta testing, remove *.blk, *.pyc, and *.db
