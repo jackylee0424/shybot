@@ -200,6 +200,7 @@ class WSocketHandler(tornado.websocket.WebSocketHandler):
         self.pca_m = None
         self.labeldict = dict()
         self.load_data()
+        #initPCA()
 
     def load_data(self):
         global pca_m
@@ -345,8 +346,9 @@ class IndexPageHandler(tornado.web.RequestHandler):
         for i in pn.allnodes:
             self.write("<a href='http://%s:8080/'>%s</a><br>" % (
                 i["ip"], i["node_label"]))
+        self.write("<hr>")
         if total_images > 0:
-            self.write("<hr><p><a href='/login'>login</a></p>")
+            self.write("<p><a href='/login'>login</a></p>")
         self.write("<p><a href='/new'>new user</a></p>")
         if total_images > 0:
             self.write("<p><a href='/train'>data explorer</a></p>")
@@ -446,7 +448,8 @@ def initPCA():
     # load saved block data
     if "data_dict" in block:
         local_data_dict.update(block["data_dict"])
-        logging.info("data/block %d/%d", len(local_data_dict), len(block["data_dict"]))
+        logging.info(
+            "data/block %d/%d", len(local_data_dict), len(block["data_dict"]))
     else:
         logging.debug("no data_dict in block")
 
@@ -466,7 +469,7 @@ def initPCA():
         logging.info("total labels: %d", len(z))
         total_images = X.shape[0]
         # PCA
-        k = len(z)
+        k = 10  # len(z)
         logging.info("principal component no: %d", k)
         pca_m = PCA(n_components=k).fit(X)
 
