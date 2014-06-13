@@ -1,0 +1,46 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Training Dataset</title>
+        <link rel="stylesheet" href="static/css/bootstrap-combined.min.css">
+        <link rel="stylesheet" href="static/css/bootstrap-editable.css">
+        <script type="text/javascript" src="static/js/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="static/js/bootstrap-editable.min.js"></script>
+        <style>
+
+        
+        </style>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                {% for i in trainset %}
+                    $('#{{ i }}').editable({
+                        type:'text',
+                        pk:{{ i }},
+                        url:'/train',
+                        ajaxOptions:{
+                            type:'post'
+                        }
+                    });
+                {% end %}
+            });
+        </script>
+    </head>
+    <body style="padding-left:30px">
+    <a href="/">Home</a><br><br>
+
+    {% for i in trainset %}
+
+        {% if i in trained_labels %}
+            <a href='train/{{ i }}'>{{ i }}</a>- <a id='{{ i }}' href='train/{{ i }}'>{{ trained_labels[i] }}</a><br>
+        {% else %}
+            <a href='train/{{ i }}'>{{ i }}</a>- <a id='{{ i }}' href='train/{{ i }}'>no label</a><br>
+        {% end if %}
+
+    {% end %}
+
+    </body>
+</html>

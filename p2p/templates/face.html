@@ -1,0 +1,275 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+            <title>{{title}}</title>
+        <link rel="stylesheet" href="static/css/bootstrap-combined.min.css">
+        <link rel="stylesheet" href="static/css/jsfeat.css">
+        <script type="text/javascript" src="static/js/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="static/js/jsfeat-min.js"></script>
+        <script type="text/javascript" src="static/js/frontalface.js"></script>
+        <script type="text/javascript" src="static/js/compatibility.js"></script>
+        <script type="text/javascript" src="static/js/profiler.js"></script>
+        <script type="text/javascript" src="static/js/dat.gui.min.js"></script>
+        <script type="text/javascript">
+
+        var present_label = "{{label}}";
+
+        $(window).load(function() {
+            "use strict";
+
+            // lets do some fun
+            var video = document.getElementById('webcam');
+            var canvas = document.getElementById('canvas');
+            try {
+                compatibility.getUserMedia({video: true}, function(stream) {
+                    try {
+                        video.src = compatibility.URL.createObjectURL(stream);
+                    } catch (error) {
+                        video.src = stream;
+                    }
+                    setTimeout(function() {
+                            video.play();
+                            demo_app();
+                        
+                            compatibility.requestAnimationFrame(tick);
+                        }, 500);
+                }, function (error) {
+                    $('#canvas').hide();
+                    $('#log').hide();
+                    $('#no_rtc').html('<h4>WebRTC not available.</h4>');
+                    $('#no_rtc').show();
+                });
+            } catch (error) {
+                $('#canvas').hide();
+                $('#log').hide();
+                $('#no_rtc').html('<h4>Something goes wrong...</h4>');
+                $('#no_rtc').show();
+            }
+
+            var stat = new profiler();
+
+            var gui,options,ctx,canvasWidth,canvasHeight;
+            var img_u8,work_canvas,work_ctx,ii_sum,ii_sqsum,ii_tilted,edg,ii_canny;
+            var classifier = jsfeat.haar.frontalface;
+
+            var max_work_size = 160;
+            var counter = 0;
+            var images_sent = 0;
+                       
+            var dfrmode = {{mode}}; //-1: training, 1: detecting
+                       
+           if (dfrmode<0){
+                $("#button").text("New User");
+                $("#label_name").show();
+                $("#label_name").attr("disabled", "disabled");
+                $("#output_label").hide();
+           }else{
+                $("#button").text("Login");
+                $("#label_name").hide();
+                $("#output_label").show();
+           }
+           
+           
+           $("#label_name").val(present_label);
+                       
+           var showqr = 0;
+           var ws = new WebSocket("ws://{{myIP}}:{{myPort}}/ws");
+           
+           ws.onopen = function()
+           {
+           
+           };
+           
+           ws.onmessage = function (evt)
+           {
+            
+                var objson = jQuery.parseJSON(unescape(evt.data));
+                var login_conf = Math.floor(images_sent/5.*100.0);
+                var sortable = [];
+                for (var user in objson["computed"]){
+                    sortable.push([user, objson["computed"][user]]);
+                }
+                sortable.sort(function(a, b){return a[1]-b[1]}).reverse();
+                var uid = sortable[0][0];
+                
+                if (login_conf>100){login_conf=100;}
+
+                $("#output_label").text(uid+"- "+String(login_conf)+"%");
+                if (images_sent>5){
+                    window.location = "/logged?label="+uid;
+                }
+                
+           };
+
+            var demo_opt = function(){
+                this.min_scale = 2;
+                this.scale_factor = 1.15;
+                this.use_canny = false;
+                this.edges_density = 0.13;
+                this.equalize_histogram = true;
+            }
+                       
+            function demo_app() {
+                canvasWidth  = canvas.width;
+                canvasHeight = canvas.height;
+                ctx = canvas.getContext('2d');
+
+                ctx.fillStyle = "rgb(255,255,0)";
+                ctx.strokeStyle = "rgb(255,255,0)";
+
+                var scale = Math.min(max_work_size/video.videoWidth, max_work_size/video.videoHeight);
+                var w = (video.videoWidth*scale)|0;
+                var h = (video.videoHeight*scale)|0;
+
+                img_u8 = new jsfeat.matrix_t(w, h, jsfeat.U8_t | jsfeat.C1_t);
+                edg = new jsfeat.matrix_t(w, h, jsfeat.U8_t | jsfeat.C1_t);
+                work_canvas = document.createElement('canvas');
+                work_canvas.width = w;
+                work_canvas.height = h;
+                work_ctx = work_canvas.getContext('2d');
+        
+                ii_sum = new Int32Array((w+1)*(h+1));
+                ii_sqsum = new Int32Array((w+1)*(h+1));
+                ii_tilted = new Int32Array((w+1)*(h+1));
+                ii_canny = new Int32Array((w+1)*(h+1));
+                
+                
+                options = new demo_opt();
+                
+                
+                gui = new dat.GUI();
+                gui.add(options, 'min_scale', 1, 4).step(0.1);
+                gui.add(options, 'scale_factor', 1.1, 2).step(0.025);
+                gui.add(options, 'equalize_histogram');
+                gui.add(options, 'use_canny');
+                gui.add(options, 'edges_density', 0.01, 1.).step(0.005);
+                
+                       
+                stat.add("haar detector");
+            }
+           
+           /*
+           $("#button").click( function()
+            {
+                dfrmode = -1 * dfrmode;
+                if (dfrmode<0){
+                    $("#button").text("Training Mode");
+                    $("#label_name").show();
+                    $("#output_label").hide();
+                }else{
+                    $("#button").text("Detection Mode");
+                    $("#label_name").hide();
+                    $("#output_label").show();
+                }
+            });
+            */
+                       
+            function tick() {
+                compatibility.requestAnimationFrame(tick);
+                stat.new_frame();
+                if (video.readyState === video.HAVE_ENOUGH_DATA) {
+
+                    ctx.drawImage(video, 0, 0, canvasWidth, canvasHeight);
+                    
+                    work_ctx.drawImage(video, 0, 0, work_canvas.width, work_canvas.height);
+                    
+                    var imageData = work_ctx.getImageData(0, 0, work_canvas.width, work_canvas.height);
+
+                    stat.start("haar detector");
+                    
+                    jsfeat.imgproc.grayscale(imageData.data, img_u8.data);
+
+                    // possible options
+                    if(options.equalize_histogram) {
+                        jsfeat.imgproc.equalize_histogram(img_u8, img_u8);
+                    }
+                    //jsfeat.imgproc.gaussian_blur(img_u8, img_u8, 3);
+
+                    jsfeat.imgproc.compute_integral_image(img_u8, ii_sum, ii_sqsum, classifier.tilted ? ii_tilted : null);
+
+                    if(options.use_canny) {
+                        jsfeat.imgproc.canny(img_u8, edg, 10, 50);
+                        jsfeat.imgproc.compute_integral_image(edg, ii_canny, null, null);
+                    }
+
+                    jsfeat.haar.edges_density = options.edges_density;
+                    var rects = jsfeat.haar.detect_multi_scale(ii_sum, ii_sqsum, ii_tilted, options.use_canny? ii_canny : null, img_u8.cols, img_u8.rows, classifier, options.scale_factor, options.min_scale);
+                    rects = jsfeat.haar.group_rectangles(rects, 1);
+
+                    stat.stop("haar detector");
+                    
+                    draw_faces(ctx, rects, canvasWidth/img_u8.cols, 1);
+        
+                    //$('#log').html(stat.log());
+                }
+            }
+           var rlx = 0;
+           var rly = 0;
+           var rlw = 0;
+           var rlh = 0;
+            function draw_faces(ctx, rects, sc, max) {
+                var on = rects.length;
+                if(on && max) {
+                    jsfeat.math.qsort(rects, 0, on-1, function(a,b){return (b.confidence<a.confidence);})
+                }
+                var n = max || on;
+                n = Math.min(n, on);
+                var r;
+                for(var i = 0; i < n; ++i) {
+                    r = rects[i];
+                    
+                       rlx = rlx*.9+r.x*sc*.1;
+                       rly = rly*.9+r.y*sc*.1;
+                       rlw = rlw*.9+r.width*sc*.1;
+                       rlh = rlh*.9+r.height*sc*.1;
+                       ctx.strokeRect((rlx)|0,(rly)|0,(rlw)|0,(rlh)|0);
+                    //ctx.strokeRect((r.x*sc)|0,(r.y*sc)|0,(r.width*sc)|0,(r.height*sc)|0);
+                       
+                    // send face ROI data to ws server
+                    var faceROI = document.createElement('canvas');
+                    faceROI.id = "faceROI";
+                    document.body.appendChild(faceROI);
+                    faceROI.width = r.width*sc;
+                    faceROI.height = r.width*sc;
+                    faceROI.getContext('2d').drawImage(video, r.x*sc, r.y*sc, r.width*sc, r.height*sc,0,0,r.width*sc, r.width*sc);
+                    var data = faceROI.toDataURL('image/png');
+                    
+                    if ((data.length>10000)&&(counter%40==0)){
+                       //send data to server
+                       present_label = $("#label_name").val();
+                       if (dfrmode<0){
+                            $("#button").text("New User ("+ String(Math.floor(images_sent/7.0*100.0))+"% complete)");
+                       }
+                       ws.send('{"base64Data":"'+escape(data)+'","mode":'+String(dfrmode)+',"label":"'+present_label+'"}');
+                       if ((images_sent>6)&&(dfrmode<0)){
+                            window.location="/done";
+                       }
+                       images_sent++;
+                    }
+                    counter++;
+                    document.body.removeChild(faceROI)
+                }
+            }
+
+            $(window).unload(function() {
+                video.pause();
+                video.src=null;
+            });
+        });
+        </script>
+
+    </head>
+    <body style="padding-left:30px">
+            <video id="webcam" width="640" height="480" style="display:none;"></video>
+            <div style=" width:640px;height:480px;" id="maindiv">
+                <canvas id="canvas" width="640" height="480"></canvas>
+                <div id="no_rtc" class="alert alert-error" style="display:none;"></div>
+                <div id="button" data-role="button"></div>
+                <input type="text" id="label_name"></input>
+                <h3 id="output_label">-</h3>
+                <br><a href="/">home</a>
+            </div>
+    </body>
+</html>
