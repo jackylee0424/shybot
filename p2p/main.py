@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 
 ## TODO
-# 1. test if face recog is loading block data
-# 2. local dict and block syncing process (work-around)
-# 3. refactor and cleaning up
-# 4. test multiple full face nodes
-# 5. refactor block structure
-# 6. add multi-sig for familiarity measurement - be present to be friend
+# 1. refactor block structure and include labels (and future extensions)
+# 2. add p2p features
+# 3. use perceptual hash (with hamming dist) for de-ID recognition
+# 4. add multi-sig for encrypt user data
 
 ## face server
 import os
@@ -345,12 +343,12 @@ class IndexPageHandler(tornado.web.RequestHandler):
         self.write("total enrolled images: %d <br>" % len(local_data_dict))
         self.write("total enrolled labels: %d <br>" % len(self.labeldict))
         self.write(
-            "total enrolled IDs: %d <br><br>" % len(
+            "total enrolled IDs: %d <br><h4>Peers</h4>" % len(
                 set([i for i in self.labeldict.values()])))
         for i in pn.allnodes:
             self.write(i["node_label"] + "<br>")
         if total_images > 0:
-            self.write("<p><a href='/login'>login</a></p>")
+            self.write("<hr><p><a href='/login'>login</a></p>")
         self.write("<p><a href='/new'>new user</a></p>")
         if total_images > 0:
             self.write("<p><a href='/train'>data explorer</a></p>")
