@@ -33,7 +33,9 @@ import thread
 import cPickle
 import logging
 
-logging.basicConfig(format='[%(asctime)s] %(name)s %(levelname)s %(message)s', level=logging.DEBUG)
+logging.basicConfig(
+    format='[%(asctime)s] %(name)s %(levelname)s %(message)s',
+    level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 total_images = 0
@@ -41,7 +43,7 @@ total_images = 0
 port = 8080
 comments = dict()
 users = dict()
-data_dict = dict()
+local_data_dict = dict()
 pca_m = None
 pn = peer.Node()
 ip = pn.node_ip
@@ -122,7 +124,7 @@ def read_cvimages2dict(path):
 
     """
 
-    data_dict = dict()
+    current_data_dict = dict()
 
     for dirname, dirnames, filenames in os.walk(path):
         for subdirname in dirnames:
@@ -135,13 +137,13 @@ def read_cvimages2dict(path):
                         filehash = perceptualhash_for_file(fullpath, 8)
                         filelabel = subject_path.split(path)[1][1:]
                         ts = int(filename[:-4])
-                        data_dict[filehash] = dict(
+                        current_data_dict[filehash] = dict(
                             data=preprocessimg(fullpath).tolist(),
                             label=filelabel, ts=ts)
                 except:
                     logging.error("Unexpected error: %s", sys.exc_info()[0])
                     raise
-    return data_dict
+    return current_data_dict
 
 
 ## low pass filter using rolling average
@@ -170,8 +172,7 @@ def predictX(
         data_dict[ky][dist_type] = CosineDistance(
             data_dict[ky][projection_type], Q)
     output = dict()
-    for i in sorted(
-        data_dict, key=lambda x: (data_dict[x][dist_type], data_dict[x]['label']))[:num_of_mins]:
+    for i in sorted(data_dict, key=lambda x: (data_dict[x][dist_type], data_dict[x]['label']))[:num_of_mins]:
 
         if data_dict[i]["label"] in labels:
             cos_dist = data_dict[i][dist_type]
@@ -201,10 +202,10 @@ class WSocketHandler(tornado.websocket.WebSocketHandler):
         self.pca_m = None
         self.labeldict = dict()
         self.load_data()
-        
+
     def load_data(self):
         global pca_m
-        
+
         if os.path.exists(join('data', 'labels.bin')):
         # load from existing file
             with open(join('data', 'labels.bin'), 'rb') as input:
@@ -221,10 +222,10 @@ class WSocketHandler(tornado.websocket.WebSocketHandler):
             logging.debug("pca model loaded")
         else:
             self.data_loaded = False
-    
+
     def detect_face(self, img):
         output_label, matched_label = predictX(
-            img, self.pca_m.components_.T, self.pca_m.mean_, data_dict,
+            img, self.pca_m.components_.T, self.pca_m.mean_, local_data_dict,
             self.labeldict, 10, "proj_pca", "cos_dist_pca")
         self.write_message(
             json.dumps(
@@ -235,23 +236,23 @@ class WSocketHandler(tornado.websocket.WebSocketHandler):
     def allow_draft76(self):
         # for iOS 5.0 Safari
         return False
-    
+
     def on_message(self, message):
         parsed = tornado.escape.json_decode(message)
         self.mode = int(parsed["mode"])
-        
+
         d = urllib2.unquote(parsed["base64Data"])
         img = base64.b64decode(d.split(',')[1])
         fname = "%.0f" % (time.time() * 1000.0)
-        
+
         if not os.path.exists(join("data", "raw", self.dir_name)):
             os.makedirs(join("data", "raw", self.dir_name))
-        
+
         fullpath = join("data", "raw", self.dir_name, fname + ".png")
         with open(fullpath, "wb") as f:
             f.write(img)
             logging.debug("saved to %s.png", fname)
-                               
+
         if (self.mode > 0) and (self.data_loaded):
             logging.debug("Detect mode")
             self.detect_face(preprocessimg(fullpath))
@@ -267,7 +268,7 @@ class WSocketHandler(tornado.websocket.WebSocketHandler):
         elif (self.mode < 0):
             # re-train PCA model for new training data
             initPCA()
-            
+
         # save label pairs to disk
         if not os.path.exists("data"):
             os.makedirs("data")
@@ -426,25 +427,25 @@ class TrainedLabelHandler(tornado.web.RequestHandler):
 
 def initPCA():
     '''TODO- separate firstrun and block update '''
-    global pca_m, data_dict, total_images
+    global pca_m, local_data_dict, total_images
 
     # read images, travese all folders again (not efficient)
-    data_dict = read_cvimages2dict(join("data", "raw"))
+    local_data_dict.update(read_cvimages2dict(join("data", "raw")))
 
     # check block
     block = dict()
     if os.path.exists("block.blk"):
         with open('block.blk', 'rb') as f:
             block = cPickle.load(f)
-    
-    logging.info("data/block %d/%d", len(data_dict), len(block))
-    
-    if not any(data_dict):
+
+    logging.info("data/block %d/%d", len(local_data_dict), len(block))
+
+    if not any(local_data_dict):
         logging.debug("no data")
     else:
         X = []
         z = set()
-        for v in data_dict.values():
+        for v in local_data_dict.values():
             X.append(np.array(v["data"]))
             z.add(v["label"])
         #y = len(X)
@@ -460,20 +461,20 @@ def initPCA():
         pca_m = PCA(n_components=k).fit(X)
 
         # build projection within data_dict
-        for ky in data_dict.keys():
-            if "proj_pca" not in data_dict[ky]:
-                data_dict[ky]["proj_pca"] = pca_m.transform(np.array(data_dict[ky]["data"]).reshape(1, -1))
-   
+        for ky in local_data_dict.keys():
+            if "proj_pca" not in local_data_dict[ky]:
+                local_data_dict[ky]["proj_pca"] = pca_m.transform(np.array(local_data_dict[ky]["data"]).reshape(1, -1))
+
     # update block and dict
-    block.update(data_dict)
-    data_dict.update(block)
+    block.update(local_data_dict)
+    local_data_dict.update(block)
 
     # save it
     with open('block.blk', 'wb') as f:
         cPickle.dump(block, f)
         logging.info("block %d", len(block))
 
-    pn.data_dict = data_dict
+    pn.data_dict = local_data_dict
 
 
 def main():
@@ -492,20 +493,19 @@ def main():
 
     if not os.path.exists("data"):
         os.makedirs("data")
-    
+
     settings = dict(
         template_path=os.path.join(os.path.dirname(__file__), "templates"),
         static_path=os.path.join(os.path.dirname(__file__), "static"),
         debug=False,
         autoescape=None)
-    
+
     #tornado.options.parse_command_line()
     application = tornado.web.Application([
         (r"/", IndexPageHandler),
         (r"/login", LoginPageHandler),
         (r"/new", NewLabelPageHandler),
         (r"/cap", CapturePageHandler),
-        #(r"/how", HowToPageHandler),
         (r"/done", DonePageHandler),
         (r"/logged", DoneLoginPageHandler),
         (r"/ws", WSocketHandler),
