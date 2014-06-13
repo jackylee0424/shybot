@@ -343,12 +343,14 @@ class IndexPageHandler(tornado.web.RequestHandler):
             "total enrolled IDs: %d <br><h4>Peers</h4>" % len(
                 set([i for i in self.labeldict.values()])))
         for i in pn.allnodes:
-            self.write(i["node_label"] + "<br>")
+            self.write("<a href='http://%s:8080/'>%s</a><br>" % (
+                i["ip"], i["node_label"]))
         if total_images > 0:
             self.write("<hr><p><a href='/login'>login</a></p>")
         self.write("<p><a href='/new'>new user</a></p>")
         if total_images > 0:
             self.write("<p><a href='/train'>data explorer</a></p>")
+        self.write("<p><a href='/reload'>reload</a></p>")
         self.write("</body></html>")
 
 
@@ -419,6 +421,12 @@ class TrainedLabelHandler(tornado.web.RequestHandler):
     def get(self, train_label):
         for i in glob.glob("data/raw/" + train_label + "/*.png"):
             self.write("<img src='../" + i + "' width=75/>")
+
+
+class ReloadHandler(tornado.web.RequestHandler):
+    def get(self):
+        initPCA()
+        self.redirect("/")
 
 
 def initPCA():
@@ -514,6 +522,7 @@ def main():
     #tornado.options.parse_command_line()
     application = tornado.web.Application([
         (r"/", IndexPageHandler),
+        (r"/reload", ReloadHandler),
         (r"/login", LoginPageHandler),
         (r"/new", NewLabelPageHandler),
         (r"/cap", CapturePageHandler),
