@@ -436,12 +436,14 @@ def initPCA():
     block = dict()
     if os.path.exists("block.blk"):
         with open('block.blk', 'rb') as f:
-            block = cPickle.load(f)
+            block.update(cPickle.load(f))
 
     # load saved block data
-    local_data_dict.update(block)
-
-    logging.info("data/block %d/%d", len(local_data_dict), len(block))
+    if "data_dict" in block:
+        local_data_dict.update(block["data_dict"])
+        logging.info("data/block %d/%d", len(local_data_dict), len(block["data_dict"]))
+    else:
+        logging.debug("no data_dict in block")
 
     if not any(local_data_dict):
         logging.debug("no data")
@@ -470,12 +472,14 @@ def initPCA():
                     np.array(local_data_dict[ky]["data"]).reshape(1, -1))
 
     # update block and dict
-    block.update(local_data_dict)
+    if "data_dict" not in block:
+        block["data_dict"] = dict()
+    block["data_dict"].update(local_data_dict)
 
     # save it
     with open('block.blk', 'wb') as f:
         cPickle.dump(block, f)
-        logging.info("block %d", len(block))
+        logging.info("block %d", len(block["data_dict"]))
 
     pn.data_dict = local_data_dict
 

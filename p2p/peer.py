@@ -210,7 +210,7 @@ class Node:
             "ip": config.host,
             "node_label": node_label,
             "merkle_hash": self.merkle_hash,
-            "block_size": len(self.block),
+            "block_size": len(self.block["data_dict"]) if "data_dict" in self.block else 0,
         })
 
     def parsePNG(self, pngfile):
@@ -246,7 +246,7 @@ class Node:
                 "relay": config.relay,
                 "port": config.port,
                 "merkle_hash": self.merkle_hash,
-                "block_size": len(self.block),
+                "block_size": len(self.block["data_dict"]) if "data_dict" in self.block else 0,
                 "node_label": node_label,
             })
             config.nodes.save()
@@ -292,24 +292,26 @@ class Node:
                 logging.error("error in receiving")
                 sync_data = dict()
 
-            #print sync_data
-            # check if hash in broadcast data
+            # check if received message is valid (contain a hash)
             if "hash" in sync_data:
-
+                # load block
                 if os.path.exists("block.blk"):
                     with open('block.blk', 'rb') as f:
                         self.block = cPickle.load(f)
-                        self.data_dict.update(self.block)
+                        self.data_dict.update(self.block["data_dict"])
                 else:
+                    # create a blank block
                     with open('block.blk', 'wb') as f:
                         cPickle.dump(self.block, f)
+                        logging.debug("empty block created")
 
                 # check duplicated hash (can do more stuff here)
-                if sync_data["hash"] not in self.block:
+                if sync_data["hash"] not in self.block["data_dict"]:
 
                     # add new hash to block
-                    self.block[sync_data["hash"]] = sync_data
+                    self.block["data_dict"][sync_data["hash"]] = sync_data
 
+                    # calculate merkle hash
                     if any(self.data_dict.keys()):
                         self.merkle_hash = merkle(
                             sorted(self.data_dict.keys()))
@@ -319,7 +321,7 @@ class Node:
                         cPickle.dump(self.block, f)
                         logging.info(
                             "block %d %s",
-                            len(self.block), self.merkle_hash)
+                            len(self.block["data_dict"]), self.merkle_hash)
             # sleep
             logging.info("sleep for %d sec", node_sleep_time)
             time.sleep(node_sleep_time)
