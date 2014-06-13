@@ -296,6 +296,8 @@ class Node:
             except:
                 print "error in receiving"
                 sync_data = dict()
+
+            #print sync_data
             # check if hash in broadcast data
             if "hash" in sync_data:
 
@@ -313,7 +315,8 @@ class Node:
                     # add new hash to block
                     self.block[sync_data["hash"]] = sync_data
 
-                    self.generate_merkle()
+                    if any(self.data_dict.keys()):
+                        self.merkle_hash = merkle(sorted(self.data_dict.keys()))
 
                     # save it
                     with open('block.blk', 'wb') as f:

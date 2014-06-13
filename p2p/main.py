@@ -472,6 +472,8 @@ def initPCA():
         cPickle.dump(block, f)
         print "block", len(block)
 
+    pn.data_dict = data_dict
+
 
 def main():
     initPCA()
