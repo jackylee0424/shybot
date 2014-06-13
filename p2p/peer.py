@@ -1,12 +1,9 @@
 
 '''
 to-do:
-- label sync problem
 - batch create testing nodes
 - verify/visualize batch nodes
 - turn block into blockchain with Merkle hash
-- check p2p link connection
-- use etherium convention (e.g., use log etc...)
 
 credit:
 zcoin, https://github.com/Max00355/zCoin
@@ -15,9 +12,9 @@ merkle, http://www.righto.com/2014/02/bitcoin-mining-hard-way-algorithms.html
 
 import os
 # for beta testing, remove *.blk, *.pyc, and *.db
-for i in["block.blk", "nodes.db", "nodes.lock"]:
-    if os.path.exists(i):
-        os.remove(i)
+#for i in["block.blk", "nodes.db", "nodes.lock"]:
+#    if os.path.exists(i):
+#        os.remove(i)
 from os.path import join
 import config  # config parameters
 import socket
