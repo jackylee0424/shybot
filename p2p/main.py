@@ -481,7 +481,14 @@ def initPCA():
         cPickle.dump(block, f)
         logging.info("block %d", len(block["data_dict"]))
 
-    pn.data_dict = local_data_dict
+    pn.data_dict.update(local_data_dict)
+
+    # update meta labels
+    local_labeldict = dict()
+    if os.path.exists(join('data', 'labels.bin')):
+        with open(join('data', 'labels.bin'), 'rb') as input:
+            local_labeldict.update(pickle.load(input))
+        pn.label_dict.update(local_labeldict)
 
 
 def main():

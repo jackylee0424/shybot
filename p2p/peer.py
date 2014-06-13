@@ -18,7 +18,7 @@ import os
 for i in["block.blk", "nodes.db", "nodes.lock"]:
     if os.path.exists(i):
         os.remove(i)
-
+from os.path import join
 import config  # config parameters
 import socket
 import random
@@ -27,6 +27,7 @@ import json
 import time
 import hashlib
 import cPickle
+import pickle
 import logging
 
 node_sleep_time = config.sleep_time
@@ -186,6 +187,7 @@ def sha256_for_file(path, block_size=256 * 128):
 class Node:
     def __init__(self):
         self.data_dict = dict()
+        self.label_dict = dict()
         self.cmds = {
             "get_nodes": get_nodes,
             "register": register,
@@ -228,6 +230,7 @@ class Node:
                 cmd="sync", note="syncing from %s" % node_label, hash=r,
                 data=self.data_dict[r]["data"],
                 label=self.data_dict[r]["label"],
+                labeldict=self.label_dict,
                 ts=self.data_dict[r]["ts"])))
         else:
             ## no return hash
@@ -294,6 +297,13 @@ class Node:
 
             # check if received message is valid (contain a hash)
             if "hash" in sync_data:
+                if "labeldict" in sync_data:
+                    self.label_dict.update(sync_data["labeldict"])
+                    print "node: ", self.label_dict
+                    if os.path.exists(join('data', 'labels.bin')):
+                        with open(join('data', 'labels.bin'), 'wb') as output:
+                            pickle.dump(self.label_dict, output, pickle.HIGHEST_PROTOCOL)
+
                 # load block
                 if os.path.exists("block.blk"):
                     with open('block.blk', 'rb') as f:
@@ -304,6 +314,10 @@ class Node:
                     with open('block.blk', 'wb') as f:
                         cPickle.dump(self.block, f)
                         logging.debug("empty block created")
+                
+                # update block and dict
+                if "data_dict" not in self.block:
+                    self.block["data_dict"] = dict()
 
                 # check duplicated hash (can do more stuff here)
                 if sync_data["hash"] not in self.block["data_dict"]:
