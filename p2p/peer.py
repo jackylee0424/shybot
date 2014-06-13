@@ -1,7 +1,7 @@
 
 '''
 to-do:
-- check shared labels
+- label sync problem
 - batch create testing nodes
 - verify/visualize batch nodes
 - turn block into blockchain with Merkle hash
@@ -297,12 +297,14 @@ class Node:
 
             # check if received message is valid (contain a hash)
             if "hash" in sync_data:
+
+                # load sync-ed meta labels
                 if "labeldict" in sync_data:
+                    with open(join('data', 'labels.bin'), 'rb') as input:
+                        self.label_dict.update(pickle.load(input))
                     self.label_dict.update(sync_data["labeldict"])
-                    print "node: ", self.label_dict
-                    if os.path.exists(join('data', 'labels.bin')):
-                        with open(join('data', 'labels.bin'), 'wb') as output:
-                            pickle.dump(self.label_dict, output, pickle.HIGHEST_PROTOCOL)
+                    with open(join('data', 'labels.bin'), 'wb') as output:
+                        pickle.dump(self.label_dict, output, pickle.HIGHEST_PROTOCOL)
 
                 # load block
                 if os.path.exists("block.blk"):
@@ -314,7 +316,7 @@ class Node:
                     with open('block.blk', 'wb') as f:
                         cPickle.dump(self.block, f)
                         logging.debug("empty block created")
-                
+
                 # update block and dict
                 if "data_dict" not in self.block:
                     self.block["data_dict"] = dict()
@@ -344,6 +346,9 @@ class Node:
             counter += 1
 
 if __name__ == "__main__":
+    if not os.path.exists("data"):
+        os.makedirs("data")
+
     logging.basicConfig(
         format='[%(asctime)s] %(name)s %(levelname)s %(message)s',
         level=logging.DEBUG)

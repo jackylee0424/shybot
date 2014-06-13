@@ -207,7 +207,7 @@ class WSocketHandler(tornado.websocket.WebSocketHandler):
         if os.path.exists(join('data', 'labels.bin')):
         # load from existing file
             with open(join('data', 'labels.bin'), 'rb') as input:
-                self.labeldict = pickle.load(input)
+                self.labeldict.update(pickle.load(input))
         else:
             logging.debug("no label file found")
             # create a new data file
@@ -267,9 +267,6 @@ class WSocketHandler(tornado.websocket.WebSocketHandler):
             # re-train PCA model for new training data
             initPCA()
 
-        # save label pairs to disk
-        if not os.path.exists("data"):
-            os.makedirs("data")
         with open(join('data', 'labels.bin'), 'wb') as output:
             pickle.dump(self.labeldict, output, pickle.HIGHEST_PROTOCOL)
 
@@ -398,7 +395,7 @@ class TrainingSetHandler(tornado.web.RequestHandler):
     def post(self):
         trained_labels = dict()
         with open(join('data', 'labels.bin'), 'rb') as input:
-            trained_labels = pickle.load(input)
+            trained_labels.update(pickle.load(input))
         posted = urlparse.parse_qs(self.request.body)
         if "value" in posted:
             trained_labels[posted['pk'][0]] = posted["value"][0]
@@ -492,6 +489,9 @@ def initPCA():
 
 
 def main():
+    if not os.path.exists("data"):
+        os.makedirs("data")
+
     initPCA()
 
     check = peer.config.nodes.find("nodes", "all")
@@ -504,9 +504,6 @@ def main():
     else:
         logging.debug("pNode started as a normal node.")
         thread.start_new_thread(pn.normal, ())
-
-    if not os.path.exists("data"):
-        os.makedirs("data")
 
     settings = dict(
         template_path=os.path.join(os.path.dirname(__file__), "templates"),
