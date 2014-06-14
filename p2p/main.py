@@ -505,9 +505,11 @@ def main():
 
     initPCA()
 
-    check = peer.config.nodes.find("nodes", "all")
-    if not check:
-        pn.updateNodes()
+    #check = peer.config.nodes.find("nodes", "all")
+    #print check
+    #if not check:
+    #    pn.updateNodes()
+    #print peer.config.relay
     if peer.config.relay:
         logging.debug("pNode started as a relay node.")
         thread.start_new_thread(pn.normal, ())

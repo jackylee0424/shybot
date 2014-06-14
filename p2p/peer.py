@@ -12,9 +12,9 @@
 
 import os
 # for beta testing, remove *.blk, *.pyc, and *.db
-#for i in["block.blk", "nodes.db", "nodes.lock"]:
-#    if os.path.exists(i):
-#        os.remove(i)
+for i in["block.blk", "nodes.db", "nodes.lock"]:
+    if os.path.exists(i):
+        os.remove(i)
 from os.path import join
 import config  # config parameters
 import socket
@@ -146,7 +146,8 @@ def send_command(cmd, out=False, god=False):
         nodes = config.seeds
     else:
         nodes = config.nodes.find("nodes", {"relay": 1})
-        random.shuffle(nodes)
+        if nodes:
+            random.shuffle(nodes)
     if not nodes:
         nodes = config.seeds
     for x in nodes:
@@ -236,7 +237,7 @@ class Node:
                 ts=time.time())))
 
     def updateNodes(self):
-        send_nodes(True)
+        #send_nodes(True)
         check = config.nodes.find("nodes", "all")
         self.allnodes = check
         if not check:
@@ -253,7 +254,7 @@ class Node:
         self.send_register()
 
     def relay(self):
-        send_nodes()
+        #send_nodes()
         self.send_register()
         sock = socket.socket()
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -284,7 +285,7 @@ class Node:
             logging.debug("send register")
             self.send_register()
         while True:
-            count_send()
+            #count_send()
             ## sending sync command to peers and load responses
             try:
                 sync_data = json.loads(send_command({"cmd": "sync"}))
@@ -297,11 +298,13 @@ class Node:
 
                 # load sync-ed meta labels
                 if "labeldict" in sync_data:
-                    with open(join('data', 'labels.bin'), 'rb') as input:
-                        self.label_dict.update(pickle.load(input))
+                    if os.path.exists(join('data', 'labels.bin')):
+                        with open(join('data', 'labels.bin'), 'rb') as input:
+                            self.label_dict.update(pickle.load(input))
                     self.label_dict.update(sync_data["labeldict"])
                     with open(join('data', 'labels.bin'), 'wb') as output:
-                        pickle.dump(self.label_dict, output, pickle.HIGHEST_PROTOCOL)
+                        pickle.dump(
+                            self.label_dict, output, pickle.HIGHEST_PROTOCOL)
 
                 # load block
                 if os.path.exists("block.blk"):
@@ -343,6 +346,7 @@ class Node:
             counter += 1
 
 if __name__ == "__main__":
+
     if not os.path.exists("data"):
         os.makedirs("data")
 
@@ -352,9 +356,9 @@ if __name__ == "__main__":
     logger = logging.getLogger(__name__)
 
     pn = Node()
-    check = config.nodes.find("nodes", "all")
-    if not check:
-        pn.updateNodes()
+    #check = config.nodes.find("nodes", "all")
+    #if not check:
+    #    pn.updateNodes()
     if config.relay:
         logging.info("pNode started as a relay node.")
         thread.start_new_thread(pn.normal, ())
