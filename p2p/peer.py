@@ -123,8 +123,9 @@ def register(obj, data):
     open("nodes.lock", 'w').close()
     allnodes = config.nodes.find("nodes", "all")
     tmp = set()
-    for i in allnodes:
-        tmp.add(i['ip'] + ":" + str(i['port']))
+    if allnodes:
+        for i in allnodes:
+            tmp.add(i['ip'] + ":" + str(i['port']))
     if data['ip'] + ":" + str(data['port']) not in tmp:
         config.nodes.insert("nodes", data)
         config.nodes.save()
