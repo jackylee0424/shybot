@@ -343,9 +343,10 @@ class IndexPageHandler(tornado.web.RequestHandler):
         self.write(
             "total enrolled IDs: %d <br><h4>Peers</h4>" % len(
                 set([i for i in self.labeldict.values()])))
-        for i in pn.allnodes:
-            self.write("<a href='http://%s:8080/'>%s</a><br>" % (
-                i["ip"], i["node_label"]))
+        if pn.allnodes:
+            for i in pn.allnodes:
+                self.write("<a href='http://%s:8080/'>%s</a><br>" % (
+                    i["ip"], i["node_label"]))
         self.write("<hr>")
         if total_images > 0:
             self.write("<p><a href='/login'>login</a></p>")
