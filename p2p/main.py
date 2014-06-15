@@ -22,14 +22,17 @@ import base64
 import urlparse
 import glob
 import cv2
-import pickle
 import hashlib
 import shutil
 from sklearn.decomposition import PCA
 import peer
 import thread
-import cPickle
 import logging
+
+try:
+    import cPickle as pickle
+except:
+    import pickle
 
 logging.basicConfig(
     format='[%(asctime)s] %(name)s %(levelname)s %(message)s',
@@ -447,7 +450,7 @@ def initPCA():
     block = dict()
     if os.path.exists(join('data', "block.blk")):
         with open(join('data', 'block.blk'), 'rb') as f:
-            block.update(cPickle.load(f))
+            block.update(pickle.load(f))
 
     # load saved block data
     if "data_dict" in block:
@@ -490,7 +493,7 @@ def initPCA():
 
     # save it
     with open(join('data', 'block.blk'), 'wb') as f:
-        cPickle.dump(block, f)
+        pickle.dump(block, f)
         logging.info("block %d", len(block["data_dict"]))
 
     pn.data_dict.update(local_data_dict)

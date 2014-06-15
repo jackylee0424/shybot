@@ -25,9 +25,11 @@ import thread
 import json
 import time
 import hashlib
-import cPickle
-import pickle
 import logging
+try:
+    import cPickle as pickle
+except:
+    import pickle
 
 node_sleep_time = config.sleep_time
 node_label = config.label
@@ -266,12 +268,12 @@ class Node:
                 # load block
                 if os.path.exists(join('data', "block.blk")):
                     with open(join('data', 'block.blk'), 'rb') as f:
-                        self.block = cPickle.load(f)
+                        self.block = pickle.load(f)
                         self.data_dict.update(self.block["data_dict"])
                 else:
                     # create a blank block
                     with open(join('data', 'block.blk'), 'wb') as f:
-                        cPickle.dump(self.block, f)
+                        pickle.dump(self.block, f)
                         logging.debug("empty block created")
 
                 # update block and dict
@@ -291,7 +293,7 @@ class Node:
 
                     # save it
                     with open(join('data', 'block.blk'), 'wb') as f:
-                        cPickle.dump(self.block, f)
+                        pickle.dump(self.block, f)
                         logging.info(
                             "block %d %s",
                             len(self.block["data_dict"]), self.merkle_hash)
