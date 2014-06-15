@@ -170,7 +170,8 @@ def predictX(
         data_dict[ky][dist_type] = CosineDistance(
             data_dict[ky][projection_type], Q)
     output = dict()
-    for i in sorted(data_dict, key=lambda x: (data_dict[x][dist_type], data_dict[x]['label']))[:num_of_mins]:
+    k = lambda x: (data_dict[x][dist_type], data_dict[x]['label'])
+    for i in sorted(data_dict, key=k)[:num_of_mins]:
         if data_dict[i]["label"] in labels:
             cos_dist = data_dict[i][dist_type]
             if cos_dist < min_dist:

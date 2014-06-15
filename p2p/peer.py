@@ -14,9 +14,9 @@
 import os
 from os.path import join
 # for beta testing, remove *.blk, *.pyc, and *.db
-for i in[join('data', "block.blk"), join('data', "nodes.db"), join('data', "nodes.lock")]:
-    if os.path.exists(i):
-        os.remove(i)
+#for i in ["block.blk", "nodes.db", "nodes.lock"]:
+#    if os.path.exists(join('data', i)):
+#        os.remove(join('data', i))
 
 import config  # config parameters
 import socket
@@ -56,20 +56,6 @@ def hash2(a, b):
     return h[::-1].encode('hex')
 
 
-def count_send():
-    mine = config.nodes.find("nodes", "all")
-    if not mine:
-        mine = 0
-    else:
-        mine = len(mine)
-    check = send_command({"cmd": "get_nodes_count"}, out=True)
-    if not check:
-        return
-    check = json.loads(check)
-    if check['nodes'] > mine:
-        send_nodes()
-
-
 def count_nodes(obj, data):
     co = config.nodes.find("nodes", "all")
     if not co:
@@ -86,36 +72,6 @@ def get_nodes(obj, data):
             if not data:
                 break
             obj.send(data)
-
-
-def send_nodes(god=False):
-    if god:
-        nodes = config.seeds
-    else:
-        nodes = config.nodes.find("nodes", {"relay": 1})
-        random.shuffle(nodes)
-    for x in nodes:
-        s = socket.socket()
-        try:
-            s.connect((x['ip'], x['port']))
-        except:
-            s.close()
-            continue
-        else:
-            s.send(json.dumps({"cmd": "get_nodes"}))
-            out = ""
-            while True:
-                data = s.recv(1024)
-                if not data:
-                    break
-                out = out + data
-            while os.path.exists(join('data', "nodes.lock")):
-                time.sleep(0.1)
-            open(join('data', "nodes.lock"), 'w').close()
-            with open("nodes.db", 'wb') as file:
-                file.write(out)
-            os.remove(join('data', "nodes.lock"))
-            break
 
 
 def register(obj, data):
@@ -151,6 +107,8 @@ def send_command(cmd, out=False, god=False):
         nodes = config.nodes.find("nodes", {"relay": 1})
         if nodes:
             random.shuffle(nodes)
+            #print "randomized:",
+            #print map(lambda x: x["ip"] + ":" + str(x["port"]), nodes)
     if not nodes:
         nodes = config.seeds
     for x in nodes:
@@ -171,10 +129,6 @@ def send_command(cmd, out=False, god=False):
             s.close()
             if out:
                 return out
-
-## basic function
-# - automatically send out latest dataset to peers
-# - block = dict(hash=dict(filename=label, base64=image_content))
 
 
 def sha256_for_file(path, block_size=256 * 128):
@@ -213,7 +167,8 @@ class Node:
             "ip": config.host,
             "node_label": node_label,
             "merkle_hash": self.merkle_hash,
-            "block_size": len(self.block["data_dict"]) if "data_dict" in self.block else 0,
+            "block_size": len(
+                self.block["data_dict"]) if "data_dict" in self.block else 0,
         })
 
     def parsePNG(self, pngfile):
@@ -240,7 +195,8 @@ class Node:
                 ts=time.time())))
 
     def updateNodes(self):
-        #send_nodes(True)
+        self.block_size = len(
+            self.block["data_dict"]) if "data_dict" in self.block else 0
         check = config.nodes.find("nodes", "all")
         self.allnodes = check
         if not check:
@@ -250,14 +206,13 @@ class Node:
                 "relay": config.relay,
                 "port": config.port,
                 "merkle_hash": self.merkle_hash,
-                "block_size": len(self.block["data_dict"]) if "data_dict" in self.block else 0,
+                "block_size": self.block_size,
                 "node_label": node_label,
             })
             config.nodes.save()
         self.send_register()
 
     def relay(self):
-        #send_nodes()
         self.send_register()
         sock = socket.socket()
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -288,7 +243,6 @@ class Node:
             logging.debug("send register")
             self.send_register()
         while True:
-            #count_send()
             ## sending sync command to peers and load responses
             try:
                 sync_data = json.loads(send_command({"cmd": "sync"}))
@@ -359,13 +313,10 @@ if __name__ == "__main__":
     logger = logging.getLogger(__name__)
 
     pn = Node()
-    #check = config.nodes.find("nodes", "all")
-    #if not check:
-    #    pn.updateNodes()
     if config.relay:
-        logging.info("pNode started as a relay node.")
+        logging.info("started as a relay node.")
         thread.start_new_thread(pn.normal, ())
         pn.relay()
     else:
-        logging.info("pNode started as a normal node.")
+        logging.info("started as a leaf node.")
         pn.normal()
