@@ -14,9 +14,9 @@
 import os
 from os.path import join
 # for beta testing, remove *.blk, *.pyc, and *.db
-#for i in ["block.blk", "nodes.db", "nodes.lock"]:
-#    if os.path.exists(join('data', i)):
-#        os.remove(join('data', i))
+for i in ["block.blk", "nodes.db", "nodes.lock"]:
+    if os.path.exists(join('data', i)):
+        os.remove(join('data', i))
 
 import config  # config parameters
 import socket
@@ -57,7 +57,7 @@ def hash2(a, b):
     h = hashlib.sha256(hashlib.sha256(a1 + b1).digest()).digest()
     return h[::-1].encode('hex')
 
-
+'''
 def count_nodes(obj, data):
     co = config.nodes.find("nodes", "all")
     if not co:
@@ -68,13 +68,13 @@ def count_nodes(obj, data):
 
 
 def get_nodes(obj, data):
-    with open("nodes.db", 'rb') as file:
+    with open(join('data', "nodes.db"), 'rb') as file:
         while True:
             data = file.read(100)
             if not data:
                 break
             obj.send(data)
-
+'''
 
 def register(obj, data):
     ''' TODO: update to latest node characteristics '''
@@ -146,9 +146,9 @@ class Node:
         self.data_dict = dict()
         self.label_dict = dict()
         self.cmds = {
-            "get_nodes": get_nodes,
+            #"get_nodes": get_nodes,
             "register": register,
-            "get_nodes_count": count_nodes,
+            #"get_nodes_count": count_nodes,
             "sync": self.syncfile,
         }
         self.block = dict()
