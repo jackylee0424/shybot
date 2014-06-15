@@ -1,6 +1,7 @@
 
 
 ## TODO
+# 1. refactor into single class
 # 1. batch create testing nodes
 # 2. verify/visualize batch nodes
 # 3. turn block into blockchain with Merkle hash
@@ -11,11 +12,12 @@
 
 
 import os
+from os.path import join
 # for beta testing, remove *.blk, *.pyc, and *.db
-for i in["block.blk", "nodes.db", "nodes.lock"]:
+for i in[join('data', "block.blk"), join('data', "nodes.db"), join('data', "nodes.lock")]:
     if os.path.exists(i):
         os.remove(i)
-from os.path import join
+
 import config  # config parameters
 import socket
 import random
@@ -107,20 +109,20 @@ def send_nodes(god=False):
                 if not data:
                     break
                 out = out + data
-            while os.path.exists("nodes.lock"):
+            while os.path.exists(join('data', "nodes.lock")):
                 time.sleep(0.1)
-            open("nodes.lock", 'w').close()
+            open(join('data', "nodes.lock"), 'w').close()
             with open("nodes.db", 'wb') as file:
                 file.write(out)
-            os.remove("nodes.lock")
+            os.remove(join('data', "nodes.lock"))
             break
 
 
 def register(obj, data):
     ''' TODO: update to latest node characteristics '''
-    while os.path.exists("nodes.lock"):
+    while os.path.exists(join('data', "nodes.lock")):
         time.sleep(0.1)
-    open("nodes.lock", 'w').close()
+    open(join('data', "nodes.lock"), 'w').close()
     allnodes = config.nodes.find("nodes", "all")
     tmp = set()
     if allnodes:
@@ -139,7 +141,7 @@ def register(obj, data):
                 config.nodes.save()
             config.nodes.insert("nodes", data)
             config.nodes.save()
-    os.remove("nodes.lock")
+    os.remove(join('data', "nodes.lock"))
 
 
 def send_command(cmd, out=False, god=False):
@@ -308,13 +310,13 @@ class Node:
                             self.label_dict, output, pickle.HIGHEST_PROTOCOL)
 
                 # load block
-                if os.path.exists("block.blk"):
-                    with open('block.blk', 'rb') as f:
+                if os.path.exists(join('data', "block.blk")):
+                    with open(join('data', 'block.blk'), 'rb') as f:
                         self.block = cPickle.load(f)
                         self.data_dict.update(self.block["data_dict"])
                 else:
                     # create a blank block
-                    with open('block.blk', 'wb') as f:
+                    with open(join('data', 'block.blk'), 'wb') as f:
                         cPickle.dump(self.block, f)
                         logging.debug("empty block created")
 
@@ -334,7 +336,7 @@ class Node:
                             sorted(self.data_dict.keys()))
 
                     # save it
-                    with open('block.blk', 'wb') as f:
+                    with open(join('data', 'block.blk'), 'wb') as f:
                         cPickle.dump(self.block, f)
                         logging.info(
                             "block %d %s",

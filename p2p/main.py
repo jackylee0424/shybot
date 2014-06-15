@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 ## TODO
-# 1. refactor block structure and include labels (and future extensions)
+# 1. refactor block structure
 # 2. add p2p features
 # 3. use perceptual hash (with hamming dist) for de-ID recognition
 # 4. add multi-sig for encrypt user data
@@ -174,7 +174,9 @@ def predictX(
         if data_dict[i]["label"] in labels:
             cos_dist = data_dict[i][dist_type]
             if cos_dist < min_dist:
-                logging.debug("found min dist: %f (%s)", cos_dist, labels[data_dict[i]["label"]])
+                logging.debug(
+                    "found min dist: %f (%s)",
+                    cos_dist, labels[data_dict[i]["label"]])
                 matched_label = data_dict[i]["label"]
                 if labels[data_dict[i]["label"]] not in output:
                     output[labels[data_dict[i]["label"]]] = cos_dist
@@ -442,8 +444,8 @@ def initPCA():
 
     # check block
     block = dict()
-    if os.path.exists("block.blk"):
-        with open('block.blk', 'rb') as f:
+    if os.path.exists(join('data', "block.blk")):
+        with open(join('data', 'block.blk'), 'rb') as f:
             block.update(cPickle.load(f))
 
     # load saved block data
@@ -486,7 +488,7 @@ def initPCA():
     block["data_dict"].update(local_data_dict)
 
     # save it
-    with open('block.blk', 'wb') as f:
+    with open(join('data', 'block.blk'), 'wb') as f:
         cPickle.dump(block, f)
         logging.info("block %d", len(block["data_dict"]))
 

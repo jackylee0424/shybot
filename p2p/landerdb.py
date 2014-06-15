@@ -1,33 +1,36 @@
 import json
 import os
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
+## save .db under 'data' folder
+
 
 class Connect:
 
     def __init__(self, db_file):
         self.db = db_file
         self.json_data = {}
-        # allows find to be called multiple times, without 
+        # allows find to be called multiple times, without
         # re-reading from disk unless a change has occured
         self.stale = True
-        if not os.path.exists(self.db):
-           self.save()
-        
+        if not os.path.exists(os.path.join("data", self.db)):
+            self.save()
+
     def _load(self):
         if self.stale:
-            with open(self.db, 'rb') as fp:
+            with open(os.path.join('data', self.db), 'rb') as fp:
                 try:
                     self.json_data = json.load(fp)
                 except:
-                    with open(self.db, 'wb') as file:
+                    with open(os.path.join("data", self.db), 'wb') as file:
                         file.write(json.dumps(self.json_data))
                     self._load()
+
     def save(self):
-        with open(self.db, 'wb') as fp:
+        with open(os.path.join("data", self.db), 'wb') as fp:
             json.dump(self.json_data, fp)
             self.stale = True
-    
+
     def insert(self, collection, data):
         self._load()
         if collection not in self.json_data:
@@ -38,8 +41,8 @@ class Connect:
         self._load()
         if collection not in self.json_data:
             return False
-        self.json_data[collection].remove(data) #Will only delete one entry
-            
+        self.json_data[collection].remove(data)  # Will only delete one entry
+
     def find(self, collection, data):
         self._load()
         if collection not in self.json_data:
@@ -50,7 +53,7 @@ class Connect:
                 yes = True
                 for y in data:
                     if y not in x:
-                        yes = False 
+                        yes = False
                         break
                     else:
                         if data[y] != x[y]:
@@ -58,10 +61,6 @@ class Connect:
                             break
                 if yes and x not in output:
                     output.append(x)
-                    
             else:
                 output.append(x)
         return output
-    
-
-
