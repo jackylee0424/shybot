@@ -13,6 +13,10 @@
 
 import os
 from os.path import join
+
+if not os.path.exists("data"):
+    os.makedirs("data")
+
 # for beta testing, remove *.blk, *.pyc, and *.db
 for i in ["block.blk", "nodes.db", "nodes.lock"]:
     if os.path.exists(join('data', i)):
@@ -305,9 +309,6 @@ class Node:
             counter += 1
 
 if __name__ == "__main__":
-
-    if not os.path.exists("data"):
-        os.makedirs("data")
 
     logging.basicConfig(
         format='[%(asctime)s] %(name)s %(levelname)s %(message)s',

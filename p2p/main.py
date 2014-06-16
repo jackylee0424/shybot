@@ -14,19 +14,25 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.web
 import tornado.websocket
-import time
-import sys
-import json
 import numpy as np
+import cv2
+from sklearn.decomposition import PCA
+import sys
+
+try:
+    import peer
+except:
+    print "\n----> please copy config_.py into config.py\n"
+    sys.exit(0)
+
+import time
+import json
 import urllib2
 import base64
 import urlparse
 import glob
-import cv2
 import hashlib
 import shutil
-from sklearn.decomposition import PCA
-import peer
 import thread
 import logging
 
@@ -508,8 +514,6 @@ def initPCA():
 
 
 def main():
-    if not os.path.exists("data"):
-        os.makedirs("data")
 
     initPCA()
 
