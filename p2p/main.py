@@ -5,6 +5,7 @@
 # 2. add p2p features
 # 3. use perceptual hash (with hamming dist) for de-ID recognition
 # 4. add multi-sig for encrypt user data
+# 5. use virtualenv and get rid of cv2/sklearn
 
 ## face server
 import os
