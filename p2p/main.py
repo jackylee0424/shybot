@@ -155,18 +155,7 @@ def read_cvimages2dict(path):
                     logging.error("Unexpected error: %s", sys.exc_info()[0])
                     raise
     return current_data_dict
-
-
-## low pass filter using rolling average
-def lowpass(x, r):
-    # set rolling value from first value
-    rolling = x[0]
-    lpx = []
-    for i in x:
-        rolling = rolling * r + i * (1. - r)
-        lpx.append(rolling)
-    return np.array(lpx)
-
+    
 
 def project(W, X, mu=None):
     if mu is None:
