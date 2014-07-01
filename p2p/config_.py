@@ -1,6 +1,6 @@
 #
 # change this file to config.py
-#
+# you need two or more nodes for p2p sync
 
 import landerdb
 import socket
@@ -14,13 +14,13 @@ try:
 except:
     local_ip = "127.0.0.1"
 
-
+# name your node
 label = "peer%d" % int(random.random()*100)
-sleep_time = 5
+sleep_time = 5  # lower the faster syncing with peers
 
 # master node needs to be a relay
 relay = 1  # set this to zero to "not" relay to other nodes (aka leaf node).
-seeds = [{"ip": "192.168.1.118", "port": 6565}]  # master has no seeds
+seeds = []  # master has no seeds
 version = "0.0.1"
 host = local_ip
 port = 6565
