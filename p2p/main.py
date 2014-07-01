@@ -155,7 +155,7 @@ def read_cvimages2dict(path):
                     logging.error("Unexpected error: %s", sys.exc_info()[0])
                     raise
     return current_data_dict
-    
+
 
 def project(W, X, mu=None):
     if mu is None:
