@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 
+## ONLY WORK WITH PUBLIC IPs (no recommended) or SUBNET IPs (192.168.x.x)
+
 ## TODO
 # 1. refactor block structure
-# 2. add p2p features
+# 2. add some p2p fun features
 # 3. use perceptual hash (with hamming dist) for de-ID recognition
 # 4. add multi-sig for encrypt user data
-# 5. use virtualenv and get rid of cv2/sklearn
+# 5. use virtualenv (how to do cv2?)
+# 6. only use numpy (to get rid of cv2/sklearn)
 
 ## face server
 import os
@@ -66,7 +69,7 @@ def CosineDistance(p, q):
 def preprocessimg(img_file):
     """
     preprocess images into 128 x 128
-    TODO: try "Bob" lib for normalizing face/eyes
+    TODO: try "bob" lib for normalizing face/eyes
 
     """
     if img_file[-3:] == "png":
@@ -203,6 +206,42 @@ def predictX(
         output[i] /= sum_dist
     return output, matched_label
 
+
+''' hardware only '''
+class HardwareSocketHandler(tornado.websocket.WebSocketHandler):
+    def open(self):
+        #print "hw ws opened"
+        self.cooldownBack = 0
+        self.cooldownLeft = 0
+        self.cooldownRight = 0
+        self.baseline = np.array([-1, -1, -1])  # init fahrenheit degree
+        
+    def on_message(self, message):
+        try:
+            thermalsensors = map(lambda x: float(x) if x is not None else -1, str(message).split(','))
+            if np.mean(thermalsensors) > 90:
+                self.cooldownBack += 1
+                if self.cooldownBack % 4 == 0:
+                    self.write_message("B")
+                    print "sent 'back' msg"
+            elif thermalsensors[0] > 90:
+                self.cooldownLeft += 1
+                if self.cooldownLeft % 4 == 0:
+                    self.write_message("L")
+                    print "sent 'left' msg"
+            elif thermalsensors[2] > 90:
+                self.cooldownRight += 1
+                if self.cooldownRight % 4 == 0:
+                    self.write_message("R")
+                    print "sent 'right' msg"
+
+        except:
+            #print "parsing error"
+            pass
+
+    def on_close(self):
+        #print "hw ws closed"
+        pass
 
 class WSocketHandler(tornado.websocket.WebSocketHandler):
     def open(self):
@@ -517,11 +556,6 @@ def main():
 
     initPCA()
 
-    #check = peer.config.nodes.find("nodes", "all")
-    #print check
-    #if not check:
-    #    pn.updateNodes()
-    #print peer.config.relay
     if peer.config.relay:
         logging.debug("pNode started as a relay node.")
         thread.start_new_thread(pn.normal, ())
@@ -546,6 +580,7 @@ def main():
         (r"/done", DonePageHandler),
         (r"/logged", DoneLoginPageHandler),
         (r"/ws", WSocketHandler),
+        (r"/hw", HardwareSocketHandler),
         (r"/train", TrainingSetHandler),
         (r"/train/(.*)", TrainedLabelHandler),
         (r"/data/(.*)", tornado.web.StaticFileHandler, {"path": "data"}),
