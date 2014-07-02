@@ -34,6 +34,9 @@ tracked_faces=[]
 fps=0
 face_counter = 0
 profile_mode = ""
+result_recog = None
+resetLED = True
+training_counter = 0
 
 ## connect to local server
 ws = create_connection("ws://localhost:8080/ws")
@@ -44,7 +47,12 @@ def readThermal():
         line = ser.readline()
         try:
             if len(line.split(','))==3:
-                ws_hw.send(line.strip())      
+                try:
+                    thermal = [float(i) for i in line.split(',')]
+                    ws_hw.send(json.dumps(dict(thermal=thermal)))
+                except:
+                    pass
+                
         except:
             break
             
@@ -53,16 +61,39 @@ def readThermal():
     FILE.close()
 
 def sendToHW():
+    global mode, training_counter
     ## receive actions from server
     while True:
         time.sleep(.2)
         result = ws_hw.recv()
-        print result
-        ser.write(result.encode())
+        if result == 'T':
+            training_counter += 1
+            if training_counter < 8:
+                mode = -1
+            else:
+                mode = 1
+        else:
+            training_counter = 0
+            ser.write(result.encode())
+            mode = 1
+
+def receiveRecog():
+    global result_recog
+    ## receive actions from server
+    while True:
+        time.sleep(.2)
+        result_recog = json.loads(ws.recv())
+        if result_recog:
+            score = result_recog["computed"].values()[0]
+            if score > .75:
+                ser.write("Y")
+            elif score < .4:
+                ser.write("D")
 
 ## use a different thread to send thermal data to server
 thread.start_new_thread(readThermal, ())
 thread.start_new_thread(sendToHW, ())
+thread.start_new_thread(receiveRecog, ())
 
 ## face class for multi-face processing
 class Face:
@@ -83,7 +114,7 @@ class Face:
         self.timer = time.time()
         
     def updateFace(self, rect):
-        if self.age<45:
+        if self.age < 45:
             self.age += 3
         else:
             self.age = 45
@@ -91,7 +122,7 @@ class Face:
         self.life = 0
 
     def fadeFace(self):
-        self.age -= 1
+        self.age -= 4
         self.life = 0
 
     def updateName(self, name):
@@ -108,15 +139,17 @@ class Face:
 
 ## draw face and related info
 def draw_faces(img, faces, c):
+    global resetLED, mode
     if len(faces)>0:
+        resetLED = True
         for f in faces:
             x1, y1, x2, y2  = f.rect
 
-            cv2.imshow("roi", img[y1:y2, x1:x2])
+            # cv2.imshow("roi", img[y1:y2, x1:x2])
             _, data = cv2.imencode('.png', img[y1:y2, x1:x2])
             png_base64 = "data:image/png;base64," + base64.b64encode(data.tostring())
             if c % 20 == 19:
-                ws.send(json.dumps(dict(label="known", mode=1, base64Data=png_base64)))
+                ws.send(json.dumps(dict(label="known", mode=mode, base64Data=png_base64)))
             # draw duration bar
             if (f.age<=40):
                 cv2.rectangle(img, (x1+5, y1+5), (((x2-5)-(x1+5))/40*f.age+x1+5, y1+10), (255, 55,0), 1)
@@ -126,6 +159,10 @@ def draw_faces(img, faces, c):
             # draw face rectangle
             cv2.rectangle(img, (x1, y1), (x2, y2), (255, 55,0), 1)
             break
+    else:
+        if resetLED:
+            ser.write("C")
+            resetLED = False
 
 
 
@@ -145,7 +182,7 @@ def detectFaces(img, cascade):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     
     # opencv face detect
-    rects = cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=4, minSize=(120, 120), flags = cv.CV_HAAR_FIND_BIGGEST_OBJECT)
+    rects = cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=4, minSize=(40, 40), flags = cv.CV_HAAR_FIND_BIGGEST_OBJECT)
 
     # if there is no faces found, use the previous detected faces saved in global list
     if len(rects) == 0:
@@ -216,8 +253,8 @@ if __name__ == '__main__':
             cam.set(cv.CV_CAP_PROP_FRAME_HEIGHT,720)
             cam.set(cv.CV_CAP_PROP_FPS,30) 
     else:
-        cam.set(cv.CV_CAP_PROP_FRAME_WIDTH,640) 
-        cam.set(cv.CV_CAP_PROP_FRAME_HEIGHT,480)
+        cam.set(cv.CV_CAP_PROP_FRAME_WIDTH,320) 
+        cam.set(cv.CV_CAP_PROP_FRAME_HEIGHT,240)
         cam.set(cv.CV_CAP_PROP_FPS,30)
 
     ## start timestamp

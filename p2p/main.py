@@ -206,13 +206,15 @@ class HardwareSocketHandler(tornado.websocket.WebSocketHandler):
         self.baseline = np.array([-1, -1, -1])  # init fahrenheit degree
         
     def on_message(self, message):
-        try:
-            thermalsensors = map(lambda x: float(x) if x is not None else -1, str(message).split(','))
+        result = tornado.escape.json_decode(message)
+        if u'thermal' in result.keys():
+            thermalsensors = result["thermal"]
             if np.mean(thermalsensors) > 90:
                 self.cooldownBack += 1
                 if self.cooldownBack % 4 == 0:
-                    self.write_message("B")
-                    print "sent 'back' msg"
+                    self.write_message("T")  # swap to training mode
+                    #self.write_message("B")
+                    print "sent 'training' msg"
             elif thermalsensors[0] > 90:
                 self.cooldownLeft += 1
                 if self.cooldownLeft % 4 == 0:
@@ -223,10 +225,6 @@ class HardwareSocketHandler(tornado.websocket.WebSocketHandler):
                 if self.cooldownRight % 4 == 0:
                     self.write_message("R")
                     print "sent 'right' msg"
-
-        except:
-            #print "parsing error"
-            pass
 
     def on_close(self):
         #print "hw ws closed"
