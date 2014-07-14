@@ -23,7 +23,7 @@ try:
     #ser = serial.Serial('/dev/ttyACM0', 115200, timeout=5, parity="N", bytesize=8)
     
     ## on mac
-    ser = serial.Serial('/dev/tty.usbmodemfa131', 115200, timeout=5, parity="N", bytesize=8)
+    ser = serial.Serial('/dev/tty.usbmodemfd141', 115200, timeout=5, parity="N", bytesize=8)
     print "open serial port..."
 except:
     print "find your device first -> $ ls /dev/tty.* "
@@ -158,6 +158,11 @@ def draw_faces(img, faces, c):
 
             # draw face rectangle
             cv2.rectangle(img, (x1, y1), (x2, y2), (255, 55,0), 1)
+            if (f.age>10):
+                if x1 < 140:
+                    ser.write("Q")
+                if x1 > 170:
+                    ser.write("W")
             break
     else:
         if resetLED:
